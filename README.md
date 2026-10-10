@@ -1,7 +1,7 @@
 # Hệ thống Quản lý Đơn hàng & Điều phối Shipper
 
 > Đồ án Module 1: Xây dựng ứng dụng quản lý tương tác bằng Python.
-> Nhóm: `<tên nhóm>` · Giảng viên: `<tên giảng viên>` · Repo: `<link GitHub>`
+> Nhóm: `DUT_AI` · Mentor: `Huỳnh Phước Nguyên` · Repo: `https://github.com/HcmusGo/Report-Module_1`
 
 ## 1. Giới thiệu
 
@@ -52,8 +52,8 @@ Mọi thao tác thay đổi dữ liệu (tạo đơn, hủy đơn, đổi trạn
 pip install uv
 
 # 2. Lấy mã nguồn
-git clone <link GitHub>
-cd <tên repo>
+git clone <https://github.com/HcmusGo/Report-Module_1.git>
+cd <Module_1>
 
 # 3. Đồng bộ môi trường theo pyproject.toml / uv.lock
 uv sync
