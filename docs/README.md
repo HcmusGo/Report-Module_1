@@ -196,10 +196,10 @@ Nhóm 5 thành viên. Khối lượng được chia theo độ phức tạp củ
 | STT | Họ tên | GitHub | Vai trò | Branch | Tỷ trọng ước tính |
 |---|---|---|---|---|---|
 | 1 | Lê Trí Tiên | `@HcmusGo` | Trưởng nhóm, Core Logic | `feat/logic` | ~24% |
-| 2 | Đào Đoàn Đỗ Quyên | `@...` | Models và phân tích nghiệp vụ | `feat/models` | ~14% |
+| 2 | Đào Đoàn Đỗ Quyên | `@DUT26DoQuyen` | Models và phân tích nghiệp vụ | `feat/models` | ~14% |
 | 3 | Nguyễn Lê Đức Bảo | `@cleivoid` | Routing và điều phối shipper | `feat/routing` | ~24% |
 | 4 | Nguyễn Vũ Băng Tâm | `@...` | Storage, kiểm thử và dữ liệu mẫu | `feat/storage` | ~14% |
-| 5 | Thân Văn Thế Lâm | `@...` | Giao diện và tích hợp | `feat/ui` | ~24% |
+| 5 | Thân Văn Thế Lâm | `@thanvanthelam` | Giao diện và tích hợp | `feat/ui` | ~24% |
 
 ### Nhiệm vụ chi tiết
 
