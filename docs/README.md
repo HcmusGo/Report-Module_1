@@ -204,6 +204,7 @@ Report-Module_1/
 ├── pyproject.toml
 ├── uv.lock
 └── README.md
+
 ```
 
 ## 6. Nghiệp vụ
@@ -293,15 +294,13 @@ Quy tắc chuyển trạng thái nằm **một chỗ duy nhất** là `ALLOWED_T
 
 ## 10. Nhóm thực hiện và phân công
 
-Nhóm 5 thành viên. Khối lượng được chia theo độ phức tạp của phần việc: ba phần **Core Logic**, **Routing** và **UI** là các phần nặng nhất, hai phần còn lại nhẹ hơn về code nhưng đảm nhận thêm tài liệu và kiểm thử.
-
 | STT | Họ tên | GitHub | Vai trò | Branch | Tỷ trọng ước tính |
 |---|---|---|---|---|---|
-| 1 | Lê Trí Tiên | `@HcmusGo` | Trưởng nhóm, Core Logic | `feat/logic` | ~24% |
-| 2 | Đào Đoàn Đỗ Quyên | `@DUT26DoQuyen` | Models và phân tích nghiệp vụ | `feat/models` | ~14% |
-| 3 | Nguyễn Lê Đức Bảo | `@cleivoid` | Routing và điều phối shipper | `feat/routing` | ~24% |
-| 4 | Nguyễn Vũ Băng Tâm | `@btam200801` | Repository, kiểm thử và dữ liệu mẫu | `feat/repository` | ~14% |
-| 5 | Thân Văn Thế Lâm | `@thanvanthelam` | Controller, giao diện và tích hợp | `feat/ui` | ~24% |
+| 1 | Lê Trí Tiên | `@HcmusGo` | Trưởng nhóm, Core Logic | `feat/logic` |
+| 2 | Đào Đoàn Đỗ Quyên | `@DUT26DoQuyen` | Models và phân tích nghiệp vụ | `feat/models` |
+| 3 | Nguyễn Lê Đức Bảo | `@cleivoid` | Routing và điều phối shipper | `feat/routing` |
+| 4 | Nguyễn Vũ Băng Tâm | `@btam200801` | Repository, kiểm thử và dữ liệu mẫu | `feat/repository` |
+| 5 | Thân Văn Thế Lâm | `@thanvanthelam` | Controller, giao diện và tích hợp | `feat/ui` |
 
 ### Nhiệm vụ chi tiết
 
@@ -443,9 +442,3 @@ Với `uv.lock`, không sửa tay: sửa `pyproject.toml` xong thì chạy `uv l
 | Cấu trúc dữ liệu và lưu file | Dict, Queue, Stack, Priority Queue, Set; Dijkstra; JSON trong `data/`, xử lý file chưa có và file hỏng |
 | Giao diện và trải nghiệm | 2 tab Streamlit; phản hồi ngay khi thêm / sửa / xóa / Undo / Redo; thông báo thành công và lỗi |
 | Trình bày | Kịch bản demo ở mục 12; mỗi thành viên nắm kiến trúc tổng thể |
-
-## 14. Tài liệu
-
-Report mô tả dự án nằm trong thư mục `DOCUMENT/`, mỗi chương một file. Người phụ trách từng chương xem ở mục 10.
-
-Link Documents đã nộp cho mentor: `https://surl.li/aguqnx`
