@@ -302,6 +302,6 @@ git push -u origin feat/<tên-tính-năng>
 
 ## 15. Tài liệu
 
-Report mô tả dự án nằm trong thư mục [`docs/`]([LINK](https://docs.google.com/document/d/1GyKDiqkAaJBSLXfAsLjIhHq1TJxYf7RvyJuJ454aJYo/edit?tab=t.0#heading=h.81zkkzcxkthp)), mỗi chương một file. Người phụ trách từng chương xem ở mục 10.
+Report mô tả dự án nằm trong thư mục DOCUMENT, mỗi chương một file. Người phụ trách từng chương xem ở mục 10.
 
-Link Documents đã nộp cho mốc 11/10: `<link>` (kiểm tra mentor có quyền truy cập trước khi nộp).
+Link Documents đã nộp cho mốc 11/10: `https://surl.li/aguqnx` (kiểm tra mentor có quyền truy cập trước khi nộp).
