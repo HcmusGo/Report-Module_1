@@ -1,7 +1,7 @@
 # Hệ thống Quản lý Đơn hàng & Điều phối Shipper
 
 > Đồ án Module 1: Xây dựng ứng dụng quản lý tương tác bằng Python.
-> Nhóm: `DUT_AI` · Mentor: `Huỳnh Phước Nguyên` · Repo: `https://github.com/HcmusGo/Report-Module_1`
+> Nhóm: `DUT_AI` · Mentor: `Quế Đình Anh Tú` · Repo: `https://github.com/HcmusGo/Report-Module_1`
 
 ## 1. Giới thiệu
 
