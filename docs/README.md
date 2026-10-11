@@ -21,17 +21,7 @@ Mọi thao tác thay đổi dữ liệu (tạo đơn, hủy đơn, đổi trạn
 - [ ] Dijkstra tìm đường ngắn nhất trên bản đồ
 - [ ] Gán shipper rảnh gần quán nhất, tính ETA và phí ship
 - [ ] Undo / Redo bằng Stack
-- [ ] Lưu và khôi phục dữ liệu qua JSON, xử lý lần chạy đầu khi chưa có file
-
-**Nên có**
-- [ ] Trọng số đường theo thời gian, có hệ số kẹt xe
-- [ ] Khóa đường / mở đường, hệ thống tự tính lại tuyến
-- [ ] So sánh Dijkstra với BFS (số nút đã duyệt, thời gian chạy)
-
-**Nếu còn thời gian**
-- [ ] Ghép nhiều đơn cho một shipper (Nearest Neighbor)
-- [ ] Đồng hồ mô phỏng ("Tiến 1 phút")
-- [ ] Thuật toán A\*
+- [ ] Lưu và khôi phục dữ liệu qua JSON, xử lý lần chạy đầu khi chưa có file\*
 
 ## 3. Công nghệ
 
@@ -126,7 +116,7 @@ delivery-system/
 └── README.md
 ```
 
-> Khi chạy `streamlit run src/app.py`, thư mục `src/` nằm trong `sys.path`, nên import theo dạng `from models.order import Order`, **không** dùng `from src.models...`.
+
 
 ## 6. Nghiệp vụ
 
@@ -218,27 +208,27 @@ Nhóm 5 thành viên. Khối lượng được chia theo độ phức tạp củ
 - `core/order_manager.py`: CRUD đơn, chuyển trạng thái, tìm kiếm, lọc
 - `core/kitchen_queue.py`: hàng đợi bếp (`enqueue`, `next_order`, `peek`, `size`)
 - `core/history.py`: `Command` (ABC), `CommandHistory`, các lớp lệnh, Undo / Redo bằng 2 Stack
-- Tài liệu: Chương 1 (giới thiệu, phạm vi), Chương 3 (kiến trúc, OOP), biên tập tổng
+
 
 **Nguyễn Lê Đức Bảo: Routing và điều phối shipper**
 - `core/road_network.py`: đồ thị, thêm / sửa / xóa đường, khóa đường, hệ số kẹt xe
 - `core/routing.py`: `Router` (ABC), `DijkstraRouter`, `BFSRouter`, thống kê số nút đã duyệt
 - `core/dispatcher.py`: gán shipper gần nhất, lộ trình 2 chặng, ETA, phí ship
 - Thiết kế bản đồ mẫu 25–40 nút
-- Tài liệu: Chương 4 (cấu trúc dữ liệu và thuật toán, ví dụ chạy tay Dijkstra)
+
 
 **Thân Văn Thế Lâm: Giao diện và tích hợp**
 - `src/app.py`: Streamlit 2 tab, `st.session_state`, form CRUD, bảng hiển thị
 - Vẽ bản đồ và tuyến đường bằng Plotly
 - Thông báo thành công / lỗi, nút Undo / Redo (vô hiệu hóa khi Stack rỗng), `st.rerun()` để cập nhật ngay
 - Tích hợp các module, chuẩn bị bản demo
-- Tài liệu: Chương 6 (thiết kế giao diện, wireframe)
+
 
 **Đào Đoàn Đỗ Quyên: Models và phân tích nghiệp vụ**
 - `models/`: `BaseEntity`, `MenuItem`, `Customer`, `Order`, `OrderItem`, `Shipper`, `Place`, `Road`, các Enum trạng thái
 - Đóng gói (thuộc tính private + property), validate trong setter, `to_dict()` / `from_dict()`
 - Unit test cho models
-- Tài liệu: Chương 2 (yêu cầu, quy tắc nghiệp vụ, kịch bản ngoại lệ), mục 5.1 (thiết kế thực thể), Phụ lục
+
 
 **Nguyễn Vũ Băng Tâm: Storage, kiểm thử và dữ liệu mẫu**
 - `core/storage.py`: đọc / ghi JSON, tạo file khi chưa có, xử lý JSON hỏng, UTF-8
