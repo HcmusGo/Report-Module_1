@@ -205,9 +205,9 @@ Nhóm 5 thành viên. Khối lượng được chia theo độ phức tạp củ
 
 | STT | Họ tên | GitHub | Vai trò | Branch | Tỷ trọng ước tính |
 |---|---|---|---|---|---|
-| 1 | Lê Trí Tiên | `@...` | Trưởng nhóm, Core Logic | `feat/logic` | ~24% |
+| 1 | Lê Trí Tiên | `@HcmusGo` | Trưởng nhóm, Core Logic | `feat/logic` | ~24% |
 | 2 | Đào Đoàn Đỗ Quyên | `@...` | Models và phân tích nghiệp vụ | `feat/models` | ~14% |
-| 3 | Nguyễn Lê Đức Bảo | `@...` | Routing và điều phối shipper | `feat/routing` | ~24% |
+| 3 | Nguyễn Lê Đức Bảo | `@cleivoid` | Routing và điều phối shipper | `feat/routing` | ~24% |
 | 4 | Nguyễn Vũ Băng Tâm | `@...` | Storage, kiểm thử và dữ liệu mẫu | `feat/storage` | ~14% |
 | 5 | Thân Văn Thế Lâm | `@...` | Giao diện và tích hợp | `feat/ui` | ~24% |
 
@@ -280,41 +280,7 @@ git checkout -b feat/<tên-tính-năng>
 git push -u origin feat/<tên-tính-năng>
 # Mở Pull Request trên GitHub, gắn reviewer, sửa theo comment, merge
 ```
-
-## 12. Kế hoạch và các mốc
-
-### Các mốc báo cáo của CLB
-
-| Mốc | Ngày | Yêu cầu | Xong |
-|---|---|---|---|
-| 1 | **Thứ 3, 13/10/2026** | Documents của dự án gồm **mô tả và thiết kế hệ thống**, nộp link trong sheet đăng ký nhóm | ☐ |
-| 2 | **Thứ 7, 17/10/2026** | Hoàn thành **50% dự án** (mentor báo lại) | ☐ |
-| 3 | **Thứ 3 – Thứ 4, 20–21/10/2026** | Các nhóm báo cáo đồ án Module 1 | ☐ |
-
-**"50%" của nhóm** (nhóm tự định nghĩa, vì mentor chưa nêu tiêu chí cụ thể):
-- `models` và `storage` đã merge vào `main`, có dữ liệu mẫu.
-- `OrderManager`, `KitchenQueue` và Undo / Redo chạy đúng, có unit test.
-- `RoadNetwork` và `DijkstraRouter` cho kết quả đúng trên bản đồ mẫu.
-- UI: Tab 1 (CRUD) hoạt động; Tab 2 chạy được luồng tạo đơn → hàng đợi bếp.
-- Phần còn lại dành cho 18–19/10: `Dispatcher` (gán shipper, ETA, phí ship), khóa đường, hoàn thiện giao diện, kiểm thử, slide.
-
-### Kế hoạch theo ngày
-
-| Ngày | Công việc |
-|---|---|
-| **Thứ 7, 10/10** | Họp chốt đề tài, trạng thái đơn, công thức, tên class và hàm. Dựng repo, `uv init`, khung `docs/`. Mọi người bắt đầu viết tài liệu phần mình |
-| **Chủ nhật, 11/10** | Viết bản nháp tài liệu (Chương 2 nộp sớm nhất vì là đầu vào cho các chương khác). Chốt **bảng hợp đồng hàm** (mục 3.5) trước tối để cả nhóm có thể bắt đầu code |
-| **Thứ 2, 12/10** | Hoàn thiện tài liệu, mở PR `docs/...`, review chéo. Ai xong sớm thì dựng khung code theo hợp đồng hàm |
-| **Thứ 3, 13/10** | **[MỐC 1]** Sửa theo review, merge tài liệu vào `main`, xuất PDF, **nộp link vào sheet đăng ký nhóm** (nên nộp sớm trong ngày, không để sát giờ chót). Sau đó tiếp tục code |
-| **Thứ 4 – Thứ 6, 14–16/10** | Code song song `feat/models`, `feat/storage`, `feat/logic`, `feat/routing`, `feat/ui` (UI dùng dữ liệu giả). Mở PR sớm và merge từng phần, không dồn đến cuối |
-| **Thứ 7, 17/10** | **[MỐC 2]** Merge các PR core vào `main`, chạy thử từ máy sạch (`uv sync` rồi chạy app), tổng hợp báo cáo 50% cho mentor |
-| **Chủ nhật, 18/10** | Tích hợp: `Dispatcher`, khóa đường, Undo / Redo trên giao diện, tạo đơn → bếp → gán shipper chạy từ đầu đến cuối |
-| **Thứ 2, 19/10** | Ngừng thêm tính năng. Kiểm thử các trường hợp biên, hoàn thiện README, làm slide, tập kịch bản demo, chuẩn bị câu hỏi bảo vệ |
-| **Thứ 3 – Thứ 4, 20–21/10** | **[MỐC 3]** Báo cáo đồ án Module 1. Chưa biết nhóm báo cáo ngày nào nên cần sẵn sàng từ sáng 20/10 |
-
-> Mốc 1 chỉ cách buổi họp đầu 3 ngày, nên review chéo tài liệu phải bắt đầu từ tối 12/10. Nếu dồn hết sang ngày 13/10 thì rất dễ trễ hạn.
-
-## 13. Kịch bản demo
+## 12. Kịch bản demo
 
 1. Mở app lần đầu khi chưa có file dữ liệu (app tự tạo từ dữ liệu mẫu).
 2. Thêm món, khách hàng; tạo một đơn mới.
@@ -336,6 +302,6 @@ git push -u origin feat/<tên-tính-năng>
 
 ## 15. Tài liệu
 
-Report mô tả dự án nằm trong thư mục [`docs/`](docs/), mỗi chương một file. Người phụ trách từng chương xem ở mục 10.
+Report mô tả dự án nằm trong thư mục [`docs/`]([LINK](https://docs.google.com/document/d/1GyKDiqkAaJBSLXfAsLjIhHq1TJxYf7RvyJuJ454aJYo/edit?tab=t.0#heading=h.81zkkzcxkthp)), mỗi chương một file. Người phụ trách từng chương xem ở mục 10.
 
-Link Documents đã nộp cho mốc 13/10: `<link>` (kiểm tra mentor có quyền truy cập trước khi nộp).
+Link Documents đã nộp cho mốc 11/10: `<link>` (kiểm tra mentor có quyền truy cập trước khi nộp).
