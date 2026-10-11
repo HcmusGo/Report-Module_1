@@ -294,7 +294,7 @@ Quy tắc chuyển trạng thái nằm **một chỗ duy nhất** là `ALLOWED_T
 
 ## 10. Nhóm thực hiện và phân công
 
-| STT | Họ tên | GitHub | Vai trò | Branch | Tỷ trọng ước tính |
+| STT | Họ tên | GitHub | Vai trò | Branch | 
 |---|---|---|---|---|---|
 | 1 | Lê Trí Tiên | `@HcmusGo` | Trưởng nhóm, Core Logic | `feat/logic` |
 | 2 | Đào Đoàn Đỗ Quyên | `@DUT26DoQuyen` | Models và phân tích nghiệp vụ | `feat/models` |
