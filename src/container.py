@@ -8,7 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from config import DATA_DIR, SAMPLE_DIR
+from config import DATA_DIR
 from controllers.catalog_controller import CatalogController
 from controllers.dispatch_controller import DispatchController
 from repositories.customer_repository import CustomerRepository
@@ -34,13 +34,13 @@ class AppContext:
     dispatch: DispatchController
 
 
-def build_container(data_dir: Path = DATA_DIR, sample_dir: Path = SAMPLE_DIR) -> AppContext:
+def build_container(data_dir: Path = DATA_DIR) -> AppContext:
     # Repository
-    menu_repo = MenuRepository(data_dir, sample_dir)
-    customer_repo = CustomerRepository(data_dir, sample_dir)
-    shipper_repo = ShipperRepository(data_dir, sample_dir)
-    order_repo = OrderRepository(data_dir, sample_dir)
-    map_repo = MapRepository(data_dir, sample_dir)
+    menu_repo = MenuRepository(data_dir)
+    customer_repo = CustomerRepository(data_dir)
+    shipper_repo = ShipperRepository(data_dir)
+    order_repo = OrderRepository(data_dir)
+    map_repo = MapRepository(data_dir)
 
     # Thành phần dùng chung (một bản duy nhất để Undo / Redo xuyên suốt mọi thao tác)
     history = CommandHistory()

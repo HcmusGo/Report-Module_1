@@ -158,9 +158,12 @@ Ví dụ lợi ích của việc tách tầng:
 
 ```
 Report-Module_1/
-├── data/
-│   └── sample/                  # Dữ liệu mẫu (có commit)
-│                                # File chạy thật (data/*.json) nằm trong .gitignore
+├── data/                        # Dữ liệu khởi tạo sẵn (có commit), app đọc / ghi trực tiếp
+│   ├── menu.json
+│   ├── customers.json
+│   ├── shippers.json
+│   ├── orders.json
+│   └── map.json
 ├── src/
 │   ├── app.py                   # View: dựng trang, 2 tab, gọi views/
 │   ├── container.py             # Ghép Repository → Service → Controller
@@ -277,7 +280,9 @@ Quy tắc chuyển trạng thái nằm **một chỗ duy nhất** là `ALLOWED_T
 | `data/map.json` | `{"places": [...], "roads": [...]}`: địa điểm (nút) và đường (cạnh) |
 | `data/orders.json` | Đơn hàng và các dòng món |
 
-- Lần chạy đầu, nếu file chưa có thì tự sao chép từ `data/sample/`, nếu không có mẫu thì tạo danh sách rỗng. Ứng dụng không được crash.
+- Dữ liệu khởi tạo (14 món, 10 khách, 5 shipper, bản đồ 30 nút / 53 đường, 7 đơn mẫu) đã nằm sẵn trong `data/*.json` và được commit. Code **không** có hàm sinh dữ liệu mẫu, cũng không tự tạo file lúc khởi động: Repository chỉ **đọc** file khi chạy. Nếu thiếu file thì dùng danh sách rỗng trong bộ nhớ (không ghi gì ra đĩa), ứng dụng không được crash.
+- Repository chỉ ghi file trong `add / update / delete` (mỗi thao tác một lần). Không nạp dữ liệu bằng vòng lặp `add()`, vì mỗi lần `add()` ghi lại cả file.
+- Muốn quay về dữ liệu ban đầu: `git restore data/`.
 - Nếu JSON bị hỏng, Repository bắt `json.JSONDecodeError`, đổi tên file lỗi thành `.bak` rồi khởi tạo lại.
 - Ghi file với `encoding="utf-8"` và `ensure_ascii=False` để không lỗi tiếng Việt có dấu.
 - Chỉ **Repository** được đọc ghi file. Các tầng khác không đụng vào `data/`.
@@ -333,8 +338,8 @@ Quy tắc chuyển trạng thái nằm **một chỗ duy nhất** là `ALLOWED_T
 
 **Nguyễn Vũ Băng Tâm: Repository, kiểm thử và dữ liệu mẫu**
 - `repositories/`: `Repository` (ABC), `JsonRepository`, các repository cụ thể, `MapRepository`
-- Tạo file khi chưa có, xử lý JSON hỏng, ghi UTF-8
-- Dữ liệu mẫu `data/sample/`, `.gitignore`, `pytest.ini`
+- Đọc file khi khởi động (thiếu file thì dùng danh sách rỗng), xử lý JSON hỏng, ghi UTF-8
+- Dữ liệu khởi tạo `data/*.json`, `.gitignore`, `pytest.ini`
 - Bảng test case, unit test cho repository và routing (phối hợp với Bảo), kiểm thử tích hợp
 - Kịch bản demo, cập nhật README và ảnh chụp giao diện
 
@@ -420,12 +425,12 @@ Với `uv.lock`, không sửa tay: sửa `pyproject.toml` xong thì chạy `uv l
 ### Commit và file không được commit
 
 - Commit message dạng: `feat: ...`, `fix: ...`, `docs: ...`, `test: ...`, `refactor: ...`, `chore: ...`.
-- Không commit `.venv/`, `__pycache__/`, `.pytest_cache/`, dữ liệu chạy thật (`data/*.json`), file test tạm.
+- Không commit `.venv/`, `__pycache__/`, `.pytest_cache/`, file test tạm. `data/*.json` là dữ liệu khởi tạo (có commit): chạy app xong dữ liệu bị đổi thì `git restore data/` trước khi commit, trừ khi chủ ý sửa dữ liệu khởi tạo.
 - Cấu hình `git config user.email` trùng email của tài khoản GitHub, nếu không commit sẽ không tính vào đóng góp của bạn.
 
 ## 12. Kịch bản demo
 
-1. Mở app lần đầu khi chưa có file dữ liệu (app tự tạo từ dữ liệu mẫu).
+1. Mở app lần đầu: dữ liệu khởi tạo trong `data/*.json` hiện ngay (menu, khách, shipper, bản đồ, đơn mẫu).
 2. Thêm món, khách hàng; tạo một đơn mới.
 3. Chuyển đơn qua hàng đợi bếp, bấm "Bếp xong món".
 4. Gán shipper, xem tuyến `shipper → quán → khách`, ETA và phí ship.

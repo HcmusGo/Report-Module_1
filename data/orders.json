@@ -1,0 +1,163 @@
+[
+  {
+    "id": "O001",
+    "customer_id": "C001",
+    "items": [
+      {
+        "menu_id": "M002",
+        "name": "Cơm tấm sườn bì chả",
+        "unit_price": 50000,
+        "quantity": 1
+      },
+      {
+        "menu_id": "M010",
+        "name": "Trà đào cam sả",
+        "unit_price": 35000,
+        "quantity": 1
+      }
+    ],
+    "status": "DELIVERED",
+    "shipper_id": "S001",
+    "created_at": "2026-10-12T11:35:00",
+    "delivery_fee": 25000,
+    "note": ""
+  },
+  {
+    "id": "O002",
+    "customer_id": "C004",
+    "items": [
+      {
+        "menu_id": "M003",
+        "name": "Bún bò Huế",
+        "unit_price": 55000,
+        "quantity": 2
+      },
+      {
+        "menu_id": "M011",
+        "name": "Cà phê sữa đá",
+        "unit_price": 25000,
+        "quantity": 2
+      }
+    ],
+    "status": "DELIVERED",
+    "shipper_id": "S002",
+    "created_at": "2026-10-12T12:05:00",
+    "delivery_fee": 23500,
+    "note": "Ít hành"
+  },
+  {
+    "id": "O003",
+    "customer_id": "C007",
+    "items": [
+      {
+        "menu_id": "M005",
+        "name": "Phở bò tái",
+        "unit_price": 55000,
+        "quantity": 1
+      },
+      {
+        "menu_id": "M008",
+        "name": "Gỏi cuốn (2 cuốn)",
+        "unit_price": 30000,
+        "quantity": 1
+      },
+      {
+        "menu_id": "M013",
+        "name": "Nước mía",
+        "unit_price": 20000,
+        "quantity": 1
+      }
+    ],
+    "status": "DELIVERED",
+    "shipper_id": "S003",
+    "created_at": "2026-10-12T18:40:00",
+    "delivery_fee": 23500,
+    "note": ""
+  },
+  {
+    "id": "O004",
+    "customer_id": "C003",
+    "items": [
+      {
+        "menu_id": "M006",
+        "name": "Bún chả",
+        "unit_price": 50000,
+        "quantity": 1
+      }
+    ],
+    "status": "CANCELLED",
+    "shipper_id": null,
+    "created_at": "2026-10-12T19:10:00",
+    "delivery_fee": 0,
+    "note": "Khách đổi ý"
+  },
+  {
+    "id": "O005",
+    "customer_id": "C008",
+    "items": [
+      {
+        "menu_id": "M001",
+        "name": "Cơm gà xối mỡ",
+        "unit_price": 45000,
+        "quantity": 1
+      },
+      {
+        "menu_id": "M012",
+        "name": "Trà tắc",
+        "unit_price": 20000,
+        "quantity": 1
+      }
+    ],
+    "status": "READY",
+    "shipper_id": null,
+    "created_at": "2026-10-13T09:02:00",
+    "delivery_fee": 0,
+    "note": ""
+  },
+  {
+    "id": "O006",
+    "customer_id": "C005",
+    "items": [
+      {
+        "menu_id": "M004",
+        "name": "Mì Quảng",
+        "unit_price": 50000,
+        "quantity": 2
+      },
+      {
+        "menu_id": "M009",
+        "name": "Chả giò (4 cuốn)",
+        "unit_price": 35000,
+        "quantity": 1
+      }
+    ],
+    "status": "NEW",
+    "shipper_id": null,
+    "created_at": "2026-10-13T09:10:00",
+    "delivery_fee": 0,
+    "note": "Không rau mùi"
+  },
+  {
+    "id": "O007",
+    "customer_id": "C002",
+    "items": [
+      {
+        "menu_id": "M007",
+        "name": "Bánh mì thịt nướng",
+        "unit_price": 25000,
+        "quantity": 3
+      },
+      {
+        "menu_id": "M011",
+        "name": "Cà phê sữa đá",
+        "unit_price": 25000,
+        "quantity": 1
+      }
+    ],
+    "status": "NEW",
+    "shipper_id": null,
+    "created_at": "2026-10-13T09:14:00",
+    "delivery_fee": 0,
+    "note": ""
+  }
+]

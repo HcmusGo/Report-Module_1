@@ -29,7 +29,7 @@
 /src/models/                        @DUT26DoQuyen
 /src/services/catalog_service.py    @DUT26DoQuyen
 
-# Tâm: repository, dữ liệu mẫu, cấu hình pytest
+# Tâm: repository, dữ liệu khởi tạo, cấu hình pytest
 /src/repositories/                  @btam200801
-/data/sample/                       @btam200801
+/data/                               @btam200801
 /pytest.ini                         @btam200801

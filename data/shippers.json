@@ -1,0 +1,37 @@
+[
+  {
+    "id": "S001",
+    "name": "Lương Văn Phúc",
+    "phone": "0912000001",
+    "node_id": "P008",
+    "status": "IDLE"
+  },
+  {
+    "id": "S002",
+    "name": "Trịnh Quang Vinh",
+    "phone": "0912000002",
+    "node_id": "P018",
+    "status": "IDLE"
+  },
+  {
+    "id": "S003",
+    "name": "Mai Xuân Sơn",
+    "phone": "0912000003",
+    "node_id": "P014",
+    "status": "IDLE"
+  },
+  {
+    "id": "S004",
+    "name": "Cao Đức Thắng",
+    "phone": "0912000004",
+    "node_id": "P022",
+    "status": "IDLE"
+  },
+  {
+    "id": "S005",
+    "name": "Ngô Thanh Tùng",
+    "phone": "0912000005",
+    "node_id": "P012",
+    "status": "OFFLINE"
+  }
+]

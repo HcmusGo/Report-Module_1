@@ -1,0 +1,62 @@
+[
+  {
+    "id": "C001",
+    "name": "Nguyễn Thị Lan",
+    "phone": "0901000001",
+    "node_id": "P002"
+  },
+  {
+    "id": "C002",
+    "name": "Trần Văn Hùng",
+    "phone": "0901000002",
+    "node_id": "P005"
+  },
+  {
+    "id": "C003",
+    "name": "Lê Minh Châu",
+    "phone": "0901000003",
+    "node_id": "P006"
+  },
+  {
+    "id": "C004",
+    "name": "Phạm Quốc Bảo",
+    "phone": "0901000004",
+    "node_id": "P009"
+  },
+  {
+    "id": "C005",
+    "name": "Võ Thị Mai",
+    "phone": "0901000005",
+    "node_id": "P011"
+  },
+  {
+    "id": "C006",
+    "name": "Đặng Hoàng Nam",
+    "phone": "0901000006",
+    "node_id": "P017"
+  },
+  {
+    "id": "C007",
+    "name": "Bùi Thanh Hà",
+    "phone": "0901000007",
+    "node_id": "P020"
+  },
+  {
+    "id": "C008",
+    "name": "Hoàng Gia Huy",
+    "phone": "0901000008",
+    "node_id": "P023"
+  },
+  {
+    "id": "C009",
+    "name": "Phan Ngọc Anh",
+    "phone": "0901000009",
+    "node_id": "P026"
+  },
+  {
+    "id": "C010",
+    "name": "Đỗ Thùy Linh",
+    "phone": "0901000010",
+    "node_id": "P029"
+  }
+]

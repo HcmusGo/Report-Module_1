@@ -6,8 +6,7 @@ Công thức là đề xuất, nhóm chốt rồi sửa tại đây.
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "data"          # file chạy thật (nằm trong .gitignore)
-SAMPLE_DIR = DATA_DIR / "sample"      # dữ liệu mẫu (có commit)
+DATA_DIR = ROOT_DIR / "data"          # dữ liệu khởi tạo sẵn (có commit), app đọc / ghi trực tiếp
 
 BASE_FEE = 15_000        # VNĐ, phí ship cơ bản
 FEE_PER_KM = 5_000       # VNĐ / km

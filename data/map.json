@@ -1,0 +1,640 @@
+{
+  "places": [
+    {
+      "id": "P001",
+      "name": "Ngã tư Chợ",
+      "x": 0.0,
+      "y": 0.0,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P002",
+      "name": "Chung cư Hoa Sen",
+      "x": 2.0,
+      "y": 0.2,
+      "kind": "HOME"
+    },
+    {
+      "id": "P003",
+      "name": "Ngã ba Cầu",
+      "x": 3.8,
+      "y": 0.0,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P004",
+      "name": "Ngã tư Công viên",
+      "x": 6.1,
+      "y": 0.0,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P005",
+      "name": "Ký túc xá Khu B",
+      "x": 8.2,
+      "y": 0.0,
+      "kind": "HOME"
+    },
+    {
+      "id": "P006",
+      "name": "Nhà trọ Phước Lộc",
+      "x": 0.1,
+      "y": 2.2,
+      "kind": "HOME"
+    },
+    {
+      "id": "P007",
+      "name": "Ngã tư Bưu điện",
+      "x": 2.2,
+      "y": 2.1,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P008",
+      "name": "Vòng xoay Trung tâm",
+      "x": 3.8,
+      "y": 2.1,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P009",
+      "name": "Văn phòng Sao Mai",
+      "x": 5.8,
+      "y": 2.2,
+      "kind": "HOME"
+    },
+    {
+      "id": "P010",
+      "name": "Ngã tư Siêu thị",
+      "x": 8.0,
+      "y": 2.2,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P011",
+      "name": "Khu dân cư Thanh Bình",
+      "x": 0.1,
+      "y": 4.1,
+      "kind": "HOME"
+    },
+    {
+      "id": "P012",
+      "name": "Ngã ba Trường học",
+      "x": 1.8,
+      "y": 3.9,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P013",
+      "name": "Quán Nhà Mình",
+      "x": 4.3,
+      "y": 4.3,
+      "kind": "RESTAURANT"
+    },
+    {
+      "id": "P014",
+      "name": "Ngã tư Bệnh viện",
+      "x": 6.2,
+      "y": 4.3,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P015",
+      "name": "Ngã tư Ga",
+      "x": 8.0,
+      "y": 3.7,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P016",
+      "name": "Ngã ba Bến xe",
+      "x": 0.0,
+      "y": 6.0,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P017",
+      "name": "Chung cư Bình An",
+      "x": 1.9,
+      "y": 6.0,
+      "kind": "HOME"
+    },
+    {
+      "id": "P018",
+      "name": "Ngã tư Thư viện",
+      "x": 4.2,
+      "y": 6.1,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P019",
+      "name": "Ngã ba Chùa",
+      "x": 6.0,
+      "y": 5.7,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P020",
+      "name": "Nhà số 45 Hẻm Cây Me",
+      "x": 8.1,
+      "y": 5.9,
+      "kind": "HOME"
+    },
+    {
+      "id": "P021",
+      "name": "Ngã tư Sân vận động",
+      "x": 0.0,
+      "y": 7.9,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P022",
+      "name": "Ngã ba Cây Xăng",
+      "x": 2.1,
+      "y": 8.0,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P023",
+      "name": "Công ty Phần mềm Tia Sáng",
+      "x": 3.8,
+      "y": 8.0,
+      "kind": "HOME"
+    },
+    {
+      "id": "P024",
+      "name": "Ngã tư Nhà hát",
+      "x": 6.2,
+      "y": 8.1,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P025",
+      "name": "Ngã ba Kênh",
+      "x": 8.0,
+      "y": 8.3,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P026",
+      "name": "Khu tập thể Công nhân",
+      "x": 0.0,
+      "y": 10.0,
+      "kind": "HOME"
+    },
+    {
+      "id": "P027",
+      "name": "Ngã tư Đèn Đỏ",
+      "x": 2.3,
+      "y": 10.0,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P028",
+      "name": "Ngã ba Xóm Mới",
+      "x": 4.0,
+      "y": 9.7,
+      "kind": "JUNCTION"
+    },
+    {
+      "id": "P029",
+      "name": "Khu phố Hoa Mai",
+      "x": 5.8,
+      "y": 9.8,
+      "kind": "HOME"
+    },
+    {
+      "id": "P030",
+      "name": "Ngã tư Bến Phà",
+      "x": 7.7,
+      "y": 10.1,
+      "kind": "JUNCTION"
+    }
+  ],
+  "roads": [
+    {
+      "id": "R001",
+      "a": "P001",
+      "b": "P002",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R002",
+      "a": "P001",
+      "b": "P006",
+      "distance_km": 0.9,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R003",
+      "a": "P002",
+      "b": "P003",
+      "distance_km": 0.7,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R004",
+      "a": "P002",
+      "b": "P007",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R005",
+      "a": "P003",
+      "b": "P004",
+      "distance_km": 0.9,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R006",
+      "a": "P003",
+      "b": "P008",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R007",
+      "a": "P004",
+      "b": "P005",
+      "distance_km": 0.8,
+      "traffic_factor": 1.6,
+      "blocked": false
+    },
+    {
+      "id": "R008",
+      "a": "P004",
+      "b": "P009",
+      "distance_km": 0.9,
+      "traffic_factor": 1.5,
+      "blocked": false
+    },
+    {
+      "id": "R009",
+      "a": "P005",
+      "b": "P010",
+      "distance_km": 0.9,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R010",
+      "a": "P006",
+      "b": "P007",
+      "distance_km": 0.8,
+      "traffic_factor": 1.5,
+      "blocked": false
+    },
+    {
+      "id": "R011",
+      "a": "P006",
+      "b": "P011",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R012",
+      "a": "P007",
+      "b": "P008",
+      "distance_km": 0.6,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R013",
+      "a": "P007",
+      "b": "P012",
+      "distance_km": 0.7,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R014",
+      "a": "P008",
+      "b": "P009",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R015",
+      "a": "P008",
+      "b": "P013",
+      "distance_km": 0.9,
+      "traffic_factor": 1.8,
+      "blocked": false
+    },
+    {
+      "id": "R016",
+      "a": "P009",
+      "b": "P010",
+      "distance_km": 0.9,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R017",
+      "a": "P009",
+      "b": "P014",
+      "distance_km": 0.9,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R018",
+      "a": "P010",
+      "b": "P015",
+      "distance_km": 0.6,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R019",
+      "a": "P011",
+      "b": "P012",
+      "distance_km": 0.7,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R020",
+      "a": "P011",
+      "b": "P016",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R021",
+      "a": "P012",
+      "b": "P013",
+      "distance_km": 1.0,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R022",
+      "a": "P012",
+      "b": "P017",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R023",
+      "a": "P013",
+      "b": "P014",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R024",
+      "a": "P013",
+      "b": "P018",
+      "distance_km": 0.7,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R025",
+      "a": "P014",
+      "b": "P015",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R026",
+      "a": "P014",
+      "b": "P019",
+      "distance_km": 0.6,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R027",
+      "a": "P015",
+      "b": "P020",
+      "distance_km": 0.9,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R028",
+      "a": "P016",
+      "b": "P017",
+      "distance_km": 0.8,
+      "traffic_factor": 1.8,
+      "blocked": false
+    },
+    {
+      "id": "R029",
+      "a": "P016",
+      "b": "P021",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R030",
+      "a": "P017",
+      "b": "P018",
+      "distance_km": 0.9,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R031",
+      "a": "P017",
+      "b": "P022",
+      "distance_km": 0.8,
+      "traffic_factor": 1.5,
+      "blocked": false
+    },
+    {
+      "id": "R032",
+      "a": "P018",
+      "b": "P019",
+      "distance_km": 0.7,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R033",
+      "a": "P018",
+      "b": "P023",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R034",
+      "a": "P019",
+      "b": "P020",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R035",
+      "a": "P019",
+      "b": "P024",
+      "distance_km": 1.0,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R036",
+      "a": "P020",
+      "b": "P025",
+      "distance_km": 1.0,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R037",
+      "a": "P021",
+      "b": "P022",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R038",
+      "a": "P021",
+      "b": "P026",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R039",
+      "a": "P022",
+      "b": "P023",
+      "distance_km": 0.7,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R040",
+      "a": "P022",
+      "b": "P027",
+      "distance_km": 0.8,
+      "traffic_factor": 1.5,
+      "blocked": false
+    },
+    {
+      "id": "R041",
+      "a": "P023",
+      "b": "P024",
+      "distance_km": 1.0,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R042",
+      "a": "P023",
+      "b": "P028",
+      "distance_km": 0.7,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R043",
+      "a": "P024",
+      "b": "P025",
+      "distance_km": 0.7,
+      "traffic_factor": 1.6,
+      "blocked": false
+    },
+    {
+      "id": "R044",
+      "a": "P024",
+      "b": "P029",
+      "distance_km": 0.7,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R045",
+      "a": "P025",
+      "b": "P030",
+      "distance_km": 0.7,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R046",
+      "a": "P026",
+      "b": "P027",
+      "distance_km": 0.9,
+      "traffic_factor": 1.4,
+      "blocked": false
+    },
+    {
+      "id": "R047",
+      "a": "P027",
+      "b": "P028",
+      "distance_km": 0.7,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R048",
+      "a": "P028",
+      "b": "P029",
+      "distance_km": 0.7,
+      "traffic_factor": 1.7,
+      "blocked": false
+    },
+    {
+      "id": "R049",
+      "a": "P029",
+      "b": "P030",
+      "distance_km": 0.8,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R050",
+      "a": "P007",
+      "b": "P013",
+      "distance_km": 1.2,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R051",
+      "a": "P013",
+      "b": "P019",
+      "distance_km": 0.9,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R052",
+      "a": "P017",
+      "b": "P023",
+      "distance_km": 1.1,
+      "traffic_factor": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "R053",
+      "a": "P024",
+      "b": "P030",
+      "distance_km": 1.0,
+      "traffic_factor": 1.0,
+      "blocked": false
+    }
+  ]
+}

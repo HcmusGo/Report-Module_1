@@ -4,28 +4,33 @@ from __future__ import annotations
 from pathlib import Path
 from typing import ClassVar, Generic
 
-from config import DATA_DIR, SAMPLE_DIR
+from config import DATA_DIR
 from repositories.base_repository import Repository, T
 
 
 class JsonRepository(Repository[T], Generic[T]):
     """Cài đặt chung. Lớp con chỉ khai báo filename, entity_cls, id_prefix.
 
+    Dữ liệu khởi tạo đã nằm sẵn trong data/*.json (có commit). Repository KHÔNG sinh dữ liệu
+    mẫu và KHÔNG tự tạo file lúc khởi động.
+
     Yêu cầu khi cài:
     - Dùng self._items: dict[str, T] làm index theo id (tra cứu O(1)).
-    - Lần đầu chưa có file: chép từ SAMPLE_DIR, không có mẫu thì tạo danh sách rỗng.
+    - _load() chỉ ĐỌC, không bao giờ ghi file.
+    - Chưa có file: bắt FileNotFoundError, giữ danh sách rỗng trong bộ nhớ, không ghi gì ra đĩa
+      (file chỉ xuất hiện khi người dùng thật sự thêm dữ liệu đầu tiên).
     - File JSON hỏng: bắt json.JSONDecodeError, đổi tên file lỗi thành .bak
-      rồi khởi tạo lại, KHÔNG để app crash.
+      rồi dùng danh sách rỗng, KHÔNG để app crash.
     - Ghi file với encoding="utf-8" và ensure_ascii=False (tiếng Việt có dấu).
-    - Mọi thao tác add / update / delete đều ghi file ngay.
+    - Chỉ add / update / delete mới gọi _flush(), mỗi thao tác đúng một lần.
+      Không nạp dữ liệu bằng vòng lặp add() (mỗi add ghi lại cả file).
     """
 
     filename: ClassVar[str] = ""
     id_prefix: ClassVar[str] = "X"
 
-    def __init__(self, data_dir: Path = DATA_DIR, sample_dir: Path = SAMPLE_DIR) -> None:
+    def __init__(self, data_dir: Path = DATA_DIR) -> None:
         self._data_dir = data_dir
-        self._sample_dir = sample_dir
         self._items: dict[str, T] = {}
         # TODO(Tâm): gọi self._load() ở đây khi đã cài xong.
 
