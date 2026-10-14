@@ -12,7 +12,7 @@
 
 Mọi thao tác thay đổi dữ liệu đều **Undo / Redo** được. Dữ liệu lưu bằng file JSON, không dùng database.
 
-### Phạm vi
+### Phạm vi 
 
 | Đã bỏ | Thay bằng |
 |---|---|
@@ -283,15 +283,15 @@ Chưa có giờ chuẩn bị hàng xong và thể tích, chỉ khối lượng; 
 
 ## 10. Nhóm thực hiện và phân công
 
-Nhóm 5 thành viên. Khối lượng chia theo độ phức tạp: ba phần **Core Logic**, **Routing** và **UI** nặng nhất, hai phần còn lại nhẹ hơn về code nhưng đảm nhận thêm tài liệu và kiểm thử.
+Nhóm 5 thành viên. Khối lượng chia theo độ phức tạp: ba phần **Core Logic**, **Routing** và **UI**
 
-| STT | Họ tên | GitHub | Vai trò | Branch |
+| STT | Họ tên | GitHub | Vai trò | Branch | Tỷ trọng ước tính |
 |---|---|---|---|---|---|
-| 1 | Lê Trí Tiên | `@HcmusGo` | Trưởng nhóm, Core Logic | `feat/logic` |
-| 2 | Đào Đoàn Đỗ Quyên | `@DUT26DoQuyen` | Models và dịch vụ xem danh mục | `feat/models` |
-| 3 | Nguyễn Lê Đức Bảo | `@cleivoid` | Routing và đề xuất shipper | `feat/routing` |
-| 4 | Nguyễn Vũ Băng Tâm | `@btam200801` | Repository, dữ liệu mẫu, kiểm thử | `feat/repository` |
-| 5 | Thân Văn Thế Lâm | `@thanvanthelam` | Controller, giao diện, tích hợp | `feat/ui` |
+| 1 | Lê Trí Tiên | `@HcmusGo` | Trưởng nhóm, Core Logic | `feat/logic` | ~24% |
+| 2 | Đào Đoàn Đỗ Quyên | `@DUT26DoQuyen` | Models và dịch vụ xem danh mục | `feat/models` | ~14% |
+| 3 | Nguyễn Lê Đức Bảo | `@cleivoid` | Routing và đề xuất shipper | `feat/routing` | ~24% |
+| 4 | Nguyễn Vũ Băng Tâm | `@btam200801` | Repository, dữ liệu mẫu, kiểm thử | `feat/repository` | ~14% |
+| 5 | Thân Văn Thế Lâm | `@thanvanthelam` | Controller, giao diện, tích hợp | `feat/ui` | ~24% |
 
 ### Nhiệm vụ chi tiết
 
