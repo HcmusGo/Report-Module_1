@@ -1,0 +1,8 @@
+[
+  {"id": "O001", "customer_name": "Nguyễn Thị Hoa", "pickup_node": "P01", "delivery_node": "P07", "weight_kg": 3.0, "deadline_min": 20, "status": "WAITING", "shipper_id": null, "note": "Gọi trước khi giao", "created_at": "2026-10-15T08:00:00"},
+  {"id": "O002", "customer_name": "Phạm Quốc Huy", "pickup_node": "P01", "delivery_node": "P10", "weight_kg": 8.0, "deadline_min": 30, "status": "WAITING", "shipper_id": null, "note": "", "created_at": "2026-10-15T08:02:00"},
+  {"id": "O003", "customer_name": "Đỗ Thu Trang", "pickup_node": "P01", "delivery_node": "P08", "weight_kg": 5.0, "deadline_min": 15, "status": "WAITING", "shipper_id": null, "note": "Giao gấp", "created_at": "2026-10-15T08:05:00"},
+  {"id": "O004", "customer_name": "Võ Minh Tuấn", "pickup_node": "P01", "delivery_node": "P09", "weight_kg": 12.0, "deadline_min": null, "status": "WAITING", "shipper_id": null, "note": "Hàng cồng kềnh", "created_at": "2026-10-15T08:07:00"},
+  {"id": "O005", "customer_name": "Lý Hải Yến", "pickup_node": "P01", "delivery_node": "P11", "weight_kg": 10.0, "deadline_min": 40, "status": "ASSIGNED", "shipper_id": "S02", "note": "", "created_at": "2026-10-15T07:50:00"},
+  {"id": "O006", "customer_name": "Hoàng Gia Bảo", "pickup_node": "P01", "delivery_node": "P08", "weight_kg": 4.0, "deadline_min": null, "status": "DELIVERED", "shipper_id": "S01", "note": "", "created_at": "2026-10-15T07:30:00"}
+]

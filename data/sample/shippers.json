@@ -1,0 +1,9 @@
+[
+  {"id": "S01", "name": "Nguyễn Văn An", "node_id": "P01", "capacity_kg": 20.0, "load_kg": 0.0, "route": []},
+  {"id": "S02", "name": "Trần Minh Đức", "node_id": "P05", "capacity_kg": 15.0, "load_kg": 10.0,
+   "route": [
+     {"order_id": "O005", "node_id": "P01", "kind": "PICKUP"},
+     {"order_id": "O005", "node_id": "P11", "kind": "DELIVERY"}
+   ]},
+  {"id": "S03", "name": "Lê Hoàng Phúc", "node_id": "P06", "capacity_kg": 10.0, "load_kg": 0.0, "route": []}
+]

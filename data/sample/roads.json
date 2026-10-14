@@ -1,0 +1,22 @@
+[
+  {"id": "R01", "a": "P01", "b": "P02", "distance_km": 1.0, "traffic": "HIGH"},
+  {"id": "R02", "a": "P01", "b": "P03", "distance_km": 1.6, "traffic": "LOW"},
+  {"id": "R03", "a": "P01", "b": "P04", "distance_km": 1.6, "traffic": "LOW"},
+  {"id": "R04", "a": "P01", "b": "P05", "distance_km": 3.0, "traffic": "MEDIUM"},
+  {"id": "R05", "a": "P01", "b": "P06", "distance_km": 3.0, "traffic": "MEDIUM"},
+  {"id": "R06", "a": "P01", "b": "P11", "distance_km": 4.0, "traffic": "LOW"},
+  {"id": "R07", "a": "P02", "b": "P03", "distance_km": 1.4, "traffic": "LOW"},
+  {"id": "R08", "a": "P02", "b": "P04", "distance_km": 1.4, "traffic": "LOW"},
+  {"id": "R09", "a": "P03", "b": "P07", "distance_km": 2.5, "traffic": "LOW"},
+  {"id": "R10", "a": "P02", "b": "P07", "distance_km": 2.0, "traffic": "HIGH"},
+  {"id": "R11", "a": "P04", "b": "P08", "distance_km": 2.5, "traffic": "LOW"},
+  {"id": "R12", "a": "P02", "b": "P08", "distance_km": 2.0, "traffic": "HIGH"},
+  {"id": "R13", "a": "P05", "b": "P09", "distance_km": 2.2, "traffic": "LOW"},
+  {"id": "R14", "a": "P03", "b": "P05", "distance_km": 3.2, "traffic": "MEDIUM"},
+  {"id": "R15", "a": "P06", "b": "P10", "distance_km": 2.2, "traffic": "LOW"},
+  {"id": "R16", "a": "P04", "b": "P06", "distance_km": 3.2, "traffic": "MEDIUM"},
+  {"id": "R17", "a": "P05", "b": "P11", "distance_km": 3.2, "traffic": "LOW"},
+  {"id": "R18", "a": "P06", "b": "P11", "distance_km": 3.2, "traffic": "LOW"},
+  {"id": "R19", "a": "P09", "b": "P11", "distance_km": 4.0, "traffic": "MEDIUM"},
+  {"id": "R20", "a": "P10", "b": "P11", "distance_km": 4.0, "traffic": "MEDIUM"}
+]

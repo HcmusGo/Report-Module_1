@@ -9,7 +9,7 @@ class AppError(Exception):
 
 
 class ValidationError(AppError):
-    """Dữ liệu đầu vào không hợp lệ (tên rỗng, giá âm, trọng số âm...)."""
+    """Dữ liệu đầu vào không hợp lệ (tên rỗng, khối lượng <= 0...)."""
 
 
 class NotFoundError(AppError):
@@ -17,4 +17,4 @@ class NotFoundError(AppError):
 
 
 class BusinessRuleError(AppError):
-    """Vi phạm luật nghiệp vụ (hủy đơn đã giao, không có shipper rảnh...)."""
+    """Vi phạm luật nghiệp vụ (sửa đơn đã gán, shipper vượt tải, không có đường...)."""

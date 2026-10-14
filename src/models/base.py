@@ -6,7 +6,7 @@ from typing import Any
 
 
 class BaseEntity(ABC):
-    """Mọi entity đều có id và biết tự (de)serialize sang dict để lưu JSON."""
+    """Mọi entity có id và tự (de)serialize sang dict để lưu JSON."""
 
     @property
     @abstractmethod

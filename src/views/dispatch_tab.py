@@ -7,7 +7,9 @@ from controllers.dispatch_controller import DispatchController
 
 
 def render_dispatch_tab(controller: DispatchController) -> None:
-    """Tạo đơn, hàng đợi bếp, nút 'Bếp xong món' / 'Gán shipper', bản đồ tuyến
-    shipper -> quán -> khách, ETA, phí ship, nút Undo / Redo (disable khi stack rỗng,
-    bấm xong gọi st.rerun())."""
-    st.info("TODO(Lâm): Tab 2 - tạo đơn, bếp, gán shipper, Undo / Redo")
+    """Hàng đợi đơn chờ, nút 'Đề xuất shipper' (bảng mọi shipper: phù hợp hay không, lý do,
+    ETA), nút 'Xác nhận gán', lộ trình từng shipper và nút 'Hoàn thành điểm dừng tiếp theo',
+    bản đồ Plotly (đường tô màu theo mức đông, tuyến được chọn tô đậm), bảng so sánh
+    'ngắn nhất theo km' với 'nhanh nhất theo phút', nút Undo / Redo (disable khi Stack
+    rỗng, bấm xong gọi st.rerun()). Hàm vẽ bản đồ Plotly đặt trong file này."""
+    st.info("TODO(Lâm): Tab 2 - hàng đợi, đề xuất shipper, bản đồ, Undo / Redo")

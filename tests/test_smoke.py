@@ -1,7 +1,7 @@
-"""Kiểm tra khung dự án: import được, nối dây được, quy tắc trạng thái đúng.
+"""Kiểm tra khung dự án: import được, nối dây được, luật trạng thái đúng.
 
 Mỗi người tự thêm file test cho phần của mình (test_models.py, test_repository.py,
-test_history.py, test_routing.py...). Dùng `uv run pytest`.
+test_history.py, test_routing.py, test_dispatch.py...). Dùng `uv run pytest`.
 """
 import importlib
 
@@ -14,16 +14,12 @@ from services.routing import PathResult
 
 MODULES = [
     "config", "exceptions",
-    "models.base", "models.menu_item", "models.customer", "models.shipper",
-    "models.order", "models.map_entities",
+    "models.base", "models.map_entities", "models.order", "models.shipper",
     "repositories.base_repository", "repositories.json_repository",
-    "repositories.menu_repository", "repositories.customer_repository",
-    "repositories.shipper_repository", "repositories.order_repository",
-    "repositories.map_repository",
-    "services.kitchen_queue", "services.history", "services.commands",
-    "services.road_network", "services.routing", "services.catalog_service",
-    "services.map_service", "services.order_service", "services.dispatch_service",
-    "controllers.result", "controllers.catalog_controller", "controllers.dispatch_controller",
+    "services.order_queue", "services.history", "services.commands",
+    "services.order_service", "services.catalog_service",
+    "services.routing", "services.dispatch_service",
+    "controllers.result", "controllers.order_controller", "controllers.dispatch_controller",
     "container",
 ]
 
@@ -35,14 +31,14 @@ def test_module_imports(name):
 
 def test_container_builds():
     ctx = build_container()
-    assert ctx.catalog is not None and ctx.dispatch is not None
+    assert ctx.orders is not None and ctx.dispatch is not None
 
 
 def test_order_status_transitions():
-    assert can_transition(OrderStatus.NEW, OrderStatus.PREPARING)
-    assert can_transition(OrderStatus.READY, OrderStatus.CANCELLED)
-    assert not can_transition(OrderStatus.DELIVERED, OrderStatus.CANCELLED)
-    assert not can_transition(OrderStatus.NEW, OrderStatus.DELIVERING)
+    assert can_transition(OrderStatus.WAITING, OrderStatus.ASSIGNED)
+    assert can_transition(OrderStatus.ASSIGNED, OrderStatus.DELIVERED)
+    assert not can_transition(OrderStatus.DELIVERED, OrderStatus.WAITING)
+    assert not can_transition(OrderStatus.WAITING, OrderStatus.DELIVERED)
 
 
 def test_result_helpers():

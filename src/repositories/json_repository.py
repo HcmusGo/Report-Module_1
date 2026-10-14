@@ -1,43 +1,37 @@
-"""Repository lưu bằng file JSON. Người phụ trách: Tâm."""
+"""Repository lưu bằng file JSON dùng chung cho mọi entity. Người phụ trách: Tâm."""
 from __future__ import annotations
 
 from pathlib import Path
-from typing import ClassVar, Generic
+from typing import Generic
 
-from config import DATA_DIR
+from config import DATA_DIR, SAMPLE_DIR
 from repositories.base_repository import Repository, T
 
 
 class JsonRepository(Repository[T], Generic[T]):
-    """Cài đặt chung. Lớp con chỉ khai báo filename, entity_cls, id_prefix.
-
-    Dữ liệu khởi tạo đã nằm sẵn trong data/*.json (có commit). Repository KHÔNG sinh dữ liệu
-    mẫu và KHÔNG tự tạo file lúc khởi động.
+    """Một lớp cho cả 4 loại dữ liệu, khác nhau ở entity_cls và filename:
+    JsonRepository(Order, "orders.json", "O"), JsonRepository(Place, "places.json", "P"), ...
 
     Yêu cầu khi cài:
-    - Dùng self._items: dict[str, T] làm index theo id (tra cứu O(1)).
-    - _load() chỉ ĐỌC, không bao giờ ghi file.
-    - Chưa có file: bắt FileNotFoundError, giữ danh sách rỗng trong bộ nhớ, không ghi gì ra đĩa
-      (file chỉ xuất hiện khi người dùng thật sự thêm dữ liệu đầu tiên).
-    - File JSON hỏng: bắt json.JSONDecodeError, đổi tên file lỗi thành .bak
-      rồi dùng danh sách rỗng, KHÔNG để app crash.
-    - Ghi file với encoding="utf-8" và ensure_ascii=False (tiếng Việt có dấu).
-    - Chỉ add / update / delete mới gọi _flush(), mỗi thao tác đúng một lần.
-      Không nạp dữ liệu bằng vòng lặp add() (mỗi add ghi lại cả file).
+    - self._items: dict[str, T] làm index theo id (tra cứu O(1)), giữ thứ tự thêm vào.
+    - Lần đầu chưa có file trong data/: chép từ data/sample/ (dữ liệu khởi tạo sẵn);
+      không có mẫu thì tạo danh sách rỗng.
+    - File JSON hỏng: bắt json.JSONDecodeError, đổi tên file lỗi thành .bak rồi
+      khởi tạo lại từ mẫu, KHÔNG để app crash.
+    - Ghi file encoding="utf-8", ensure_ascii=False (tiếng Việt có dấu), ghi ngay sau
+      mỗi add / update / delete.
+    - Entity được dựng qua entity_cls.from_dict(data), lưu qua entity.to_dict().
     """
 
-    filename: ClassVar[str] = ""
-    id_prefix: ClassVar[str] = "X"
-
-    def __init__(self, data_dir: Path = DATA_DIR) -> None:
+    def __init__(self, entity_cls: type[T], filename: str, id_prefix: str,
+                 data_dir: Path = DATA_DIR, sample_dir: Path = SAMPLE_DIR) -> None:
+        self._entity_cls = entity_cls
+        self._filename = filename
+        self._id_prefix = id_prefix
         self._data_dir = data_dir
+        self._sample_dir = sample_dir
         self._items: dict[str, T] = {}
         # TODO(Tâm): gọi self._load() ở đây khi đã cài xong.
-
-    @classmethod
-    def _entity_from_dict(cls, data: dict) -> T:
-        """Lớp con trả về đúng entity, ví dụ MenuItem.from_dict(data)."""
-        raise NotImplementedError
 
     def _load(self) -> None:
         raise NotImplementedError("TODO(Tâm)")

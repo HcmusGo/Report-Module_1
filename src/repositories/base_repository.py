@@ -1,7 +1,6 @@
-"""Giao diện Repository dùng chung. Người phụ trách: Tâm.
+"""Giao diện Repository. Người phụ trách: Tâm.
 
 Service chỉ biết giao diện này, không biết dữ liệu nằm ở JSON hay nơi khác.
-Muốn đổi JSON sang CSV / SQLite: viết repository mới, Service giữ nguyên.
 """
 from __future__ import annotations
 
@@ -16,7 +15,7 @@ T = TypeVar("T", bound=BaseEntity)
 class Repository(ABC, Generic[T]):
     @abstractmethod
     def get_all(self) -> list[T]:
-        """Toàn bộ đối tượng, theo thứ tự thêm vào."""
+        """Toàn bộ đối tượng theo thứ tự lưu."""
 
     @abstractmethod
     def get_by_id(self, entity_id: str) -> T | None:
@@ -32,8 +31,8 @@ class Repository(ABC, Generic[T]):
 
     @abstractmethod
     def delete(self, entity_id: str) -> T | None:
-        """Xóa và lưu file. Trả về đối tượng đã xóa (để Undo khôi phục)."""
+        """Xóa và lưu file. Trả về đối tượng đã xóa."""
 
     @abstractmethod
     def next_id(self) -> str:
-        """Sinh id mới, ví dụ 'M001', 'O017'."""
+        """Sinh id mới, ví dụ 'O007'."""

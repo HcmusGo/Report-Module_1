@@ -5,17 +5,28 @@ from abc import ABC, abstractmethod
 
 
 class Command(ABC):
-    """Một thao tác có thể hoàn tác. Lớp con cụ thể nằm trong commands.py."""
+    """Một thao tác có thể hoàn tác. Lớp con cụ thể nằm trong commands.py.
 
-    description: str = ""   # mô tả ngắn để hiện trên UI, ví dụ "Tạo đơn O001"
+    QUY TẮC SNAPSHOT (góp ý của mentor):
+    - apply() phải CHỤP LẠI trạng thái trước khi thay đổi (ví dụ order.to_dict(),
+      vị trí trong hàng đợi) và lưu vào thuộc tính của Command.
+    - undo() chỉ KHÔI PHỤC từ snapshot đó. KHÔNG gán cứng giá trị mặc định
+      (ví dụ không viết `status = WAITING` hay `load_kg = 0`), vì trạng thái trước
+      đó có thể khác.
+    - apply() bị gọi lại khi Redo nên chụp snapshot MỚI ở mỗi lần gọi.
+    - Snapshot phải là bản sao độc lập (to_dict() hoặc copy.deepcopy), không giữ
+      tham chiếu tới đối tượng đang bị sửa.
+    """
+
+    description: str = ""   # mô tả ngắn để hiện trên UI, ví dụ "Gán O003 cho S01"
 
     @abstractmethod
     def apply(self) -> None:
-        """Thực hiện thao tác (và lưu dữ liệu)."""
+        """Chụp snapshot rồi thực hiện thao tác (và lưu dữ liệu)."""
 
     @abstractmethod
     def undo(self) -> None:
-        """Đảo ngược đúng thao tác trên, trả mọi thứ về trạng thái trước đó."""
+        """Khôi phục dữ liệu từ snapshot do apply() chụp."""
 
 
 class CommandHistory:
@@ -44,7 +55,7 @@ class CommandHistory:
         raise NotImplementedError("TODO(Tiên)")
 
     def undo_label(self) -> str | None:
-        """Mô tả thao tác sẽ bị hoàn tác, để hiện trên nút Undo."""
+        """Mô tả thao tác sắp bị hoàn tác, hiện trên nút Undo."""
         raise NotImplementedError("TODO(Tiên)")
 
     def redo_label(self) -> str | None:
