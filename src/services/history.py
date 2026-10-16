@@ -37,26 +37,49 @@ class CommandHistory:
         self._redo_stack: list[Command] = []
 
     def execute(self, cmd: Command) -> None:
-        """cmd.apply(), push vào undo, XÓA redo_stack."""
-        raise NotImplementedError("TODO(Tiên)")
+        """cmd.apply(), push vào undo, XÓA redo_stack.
+        Nếu apply() ném lỗi thì lệnh không được ghi vào lịch sử."""
+        cmd.apply()
+        self._undo_stack.append(cmd)
+        self._redo_stack.clear()
 
     def undo(self) -> Command | None:
-        """Pop undo, gọi undo(), push sang redo. Stack rỗng thì trả None."""
-        raise NotImplementedError("TODO(Tiên)")
+        """Pop undo, gọi undo(), push sang redo. Stack rỗng thì trả None.
+        Nếu undo() ném lỗi, lệnh được trả lại đỉnh undo_stack để không mất lịch sử."""
+        if not self._undo_stack:
+            return None
+        cmd = self._undo_stack.pop()
+        try:
+            cmd.undo()
+        except Exception:
+            self._undo_stack.append(cmd)
+            raise
+        self._redo_stack.append(cmd)
+        return cmd
 
     def redo(self) -> Command | None:
         """Pop redo, gọi apply(), push lại undo. Stack rỗng thì trả None."""
-        raise NotImplementedError("TODO(Tiên)")
+        if not self._redo_stack:
+            return None
+        cmd = self._redo_stack.pop()
+        try:
+            cmd.apply()
+        except Exception:
+            self._redo_stack.append(cmd)
+            raise
+        self._undo_stack.append(cmd)
+        return cmd
 
     def can_undo(self) -> bool:
-        raise NotImplementedError("TODO(Tiên)")
+        return bool(self._undo_stack)
 
     def can_redo(self) -> bool:
-        raise NotImplementedError("TODO(Tiên)")
+        return bool(self._redo_stack)
 
     def undo_label(self) -> str | None:
         """Mô tả thao tác sắp bị hoàn tác, hiện trên nút Undo."""
-        raise NotImplementedError("TODO(Tiên)")
+        return self._undo_stack[-1].description if self._undo_stack else None
 
     def redo_label(self) -> str | None:
-        raise NotImplementedError("TODO(Tiên)")
+        """Mô tả thao tác sắp được làm lại, hiện trên nút Redo."""
+        return self._redo_stack[-1].description if self._redo_stack else None
