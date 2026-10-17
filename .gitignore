@@ -8,3 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+# Data & Runtime JSON files
+data/*.json
+!data/sample_*.json
+*.bak
+*.tmp
