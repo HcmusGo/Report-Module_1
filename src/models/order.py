@@ -23,7 +23,7 @@ def can_transition(current: OrderStatus, target: OrderStatus) -> bool:
     return target in ALLOWED_TRANSITIONS[current]
 
 
-class Order:
+class Order(BaseEntity):
     """Đơn hàng.
     Trường: id, customer_name, pickup_node, delivery_node (id Place), weight_kg (> 0),
     deadline_min (int | None: hạn giao tối đa tính bằng phút kể từ lúc gán), status,

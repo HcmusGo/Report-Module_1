@@ -1,27 +1,38 @@
-"""Xem dữ liệu khởi tạo sẵn: địa điểm, đường, shipper (chỉ đọc). Người phụ trách: Quyên."""
-from __future__ import annotations
-
-from models.map_entities import Place, PlaceKind, Road
-from models.shipper import Shipper
-from repositories.base_repository import Repository
-
+from typing import List, Optional
+from src.exceptions import NotFoundError
+from src.models.map_entities import Place, Road
+from src.models.shipper import Shipper
+from src.repositories.base_repository import Repository
 
 class CatalogService:
-    """Không có thêm / sửa / xóa: các dữ liệu này nạp sẵn từ data/*.json."""
+    def __init__(
+        self,
+        place_repo: Repository[Place],
+        road_repo: Repository[Road],
+        shipper_repo: Repository[Shipper]
+    ):
+        self._place_repo = place_repo
+        self._road_repo = road_repo
+        self._shipper_repo = shipper_repo
 
-    def __init__(self, places: Repository[Place], roads: Repository[Road],
-                 shippers: Repository[Shipper]) -> None:
-        self._places, self._roads, self._shippers = places, roads, shippers
-
-    def list_places(self, kind: PlaceKind | None = None) -> list[Place]:
-        raise NotImplementedError("TODO(Quyên)")
-
-    def list_roads(self) -> list[Road]:
-        raise NotImplementedError("TODO(Quyên)")
-
-    def list_shippers(self) -> list[Shipper]:
-        raise NotImplementedError("TODO(Quyên)")
+    def get_place(self, place_id: str) -> Place:
+        place = self._place_repo.get_by_id(place_id)
+        if not place:
+            raise NotFoundError(f"Không tìm thấy địa điểm với ID: {place_id}")
+        return place
 
     def place_name(self, place_id: str) -> str:
-        """Tên hiển thị của một địa điểm; không thấy thì ném NotFoundError."""
-        raise NotImplementedError("TODO(Quyên)")
+        """Trả về tên địa điểm, ném NotFoundError nếu không thấy."""
+        place = self._place_repo.get_by_id(place_id)
+        if not place:
+            raise NotFoundError(f"Không tìm thấy địa điểm với ID: {place_id}")
+        return place.name
+
+    def list_places(self) -> List[Place]:
+        return self._place_repo.get_all()
+
+    def list_roads(self) -> List[Road]:
+        return self._road_repo.get_all()
+
+    def list_shippers(self) -> List[Shipper]:
+        return self._shipper_repo.get_all()
