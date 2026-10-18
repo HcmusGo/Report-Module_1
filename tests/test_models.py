@@ -1,7 +1,7 @@
 import pytest
-from src.models.order import Order, OrderStatus
-from src.models.shipper import Shipper, Stop, StopKind
-from src.models.map_entities import Place, Road, PlaceKind, TrafficLevel
+from models.order import Order, OrderStatus
+from models.shipper import Shipper, Stop, StopKind
+from models.map_entities import Place, Road, PlaceKind, TrafficLevel
 
 def test_order_model_roundtrip():
     data = {

@@ -1,8 +1,8 @@
 from typing import List, Optional
-from src.exceptions import NotFoundError
-from src.models.map_entities import Place, Road
-from src.models.shipper import Shipper
-from src.repositories.base_repository import Repository
+from exceptions import NotFoundError
+from models.map_entities import Place, Road
+from models.shipper import Shipper
+from repositories.base_repository import Repository
 
 class CatalogService:
     def __init__(
