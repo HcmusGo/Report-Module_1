@@ -20,67 +20,48 @@ class DispatchController:
     # ---- Hàng đợi và đề xuất ----
     def waiting_table(self) -> list[dict]:
         """Các đơn đang chờ theo đúng thứ tự hàng đợi."""
-        self._dispatch.get_waiting_table()
-
+        raise NotImplementedError("TODO(Lâm)")
 
     def suggest_table(self, order_id: str) -> Result:
         """Result.data = list[dict]: mỗi shipper một dòng (phù hợp hay không, lý do, ETA...)."""
-        try 
-        self._dispatch.get_suggestions (order_id=order_id) = suggestion
-        return Result.success (data = suggestion)
-        except AppError as e:
-            return Result.fail(str(e))
+        raise NotImplementedError("TODO(Lâm)")
 
     def assign(self, order_id: str, shipper_id: str | None = None) -> Result:
         """Gán shipper (mặc định là shipper phù hợp nhất)."""
-        try 
-        self._dispatch.assign(order_id=order_id, shipper_id=shipper=id)
-        return Result.success ("Điều phối đơn hàng {order_id} thành công")
-        except AppError as e:
-            return Result.fail(str(e))
+        raise NotImplementedError("TODO(Lâm)")
+
     def complete_next_stop(self, shipper_id: str) -> Result:
-        try 
-        self._dispatch.complete_next_stop(shipper_id=shipper_id)
-        return Result.success ("Hoàn thành điểm dừng cho shipper_id {shipper_id} thành công")
-        except AppError as e:
-            return Result.fail(str(e))
+        raise NotImplementedError("TODO(Lâm)")
 
     # ---- Lộ trình và bản đồ ----
     def route_table(self) -> list[dict]:
         """Lộ trình hiện tại của từng shipper (các điểm dừng còn lại)."""
-       return self._dispatch.route_table()
+        raise NotImplementedError("TODO(Lâm)")
 
     def map_figure_data(self, highlight_paths: list[list[str]] | None = None) -> dict:
         """Dữ liệu thuần để vẽ bản đồ: {'nodes': [...], 'edges': [...], 'highlight': [...]}.
         Đường vẽ màu theo mức đông (LOW, MEDIUM, HIGH)."""
-       return self._dispatch.map_figure_data (highlight_paths=highlight_paths)
+        raise NotImplementedError("TODO(Lâm)")
 
     def compare_routes(self, src: str, dst: str) -> list[dict]:
         """Bảng so sánh đường ngắn nhất theo km với đường nhanh nhất theo phút."""
-        return self._dispatch.compare_routes (src=src, dst=dst)
+        raise NotImplementedError("TODO(Lâm)")
 
     # ---- Undo / Redo ----
     def undo(self) -> Result:
-        try 
-        self._history.undo()
-        return Result.success ("Đã hoàn tác (undo) hành động trước đó")
-        except AppError as e:
-            return Result.fail(str(e))
+        raise NotImplementedError("TODO(Lâm)")
 
     def redo(self) -> Result:
-        try 
-        self._history.redo()
-        return Result.success ("Đã làm lại (redo) hành động trước đó")
-        except AppError as e:
-            return Result.fail(str(e))
+        raise NotImplementedError("TODO(Lâm)")
+
     def can_undo(self) -> bool:
-        return self._history.can_undo()
+        raise NotImplementedError("TODO(Lâm)")
 
     def can_redo(self) -> bool:
-        return self._history.can_redo()
+        raise NotImplementedError("TODO(Lâm)")
 
     def undo_label(self) -> str | None:
-        return self._history.can_undo_label()
+        raise NotImplementedError("TODO(Lâm)")
 
     def redo_label(self) -> str | None:
-        return self._history.can_redo_label()
+        raise NotImplementedError("TODO(Lâm)")
