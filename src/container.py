@@ -4,6 +4,7 @@
 """
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -22,6 +23,9 @@ from services.order_service import OrderService
 from services.routing import DijkstraRouter, RoadNetwork
 
 
+log = logging.getLogger(__name__)
+
+
 @dataclass
 class AppContext:
     """Thứ duy nhất app.py giữ trong st.session_state."""
@@ -30,7 +34,10 @@ class AppContext:
     dispatch: DispatchController
 
 
-def build_container(data_dir: Path = DATA_DIR, sample_dir: Path = SAMPLE_DIR) -> AppContext:
+def build_container(data_dir: Path = DATA_DIR, sample_dir: Path = SAMPLE_DIR,
+                    restore_queue: bool = True) -> AppContext:
+    """Dựng toàn bộ ứng dụng. restore_queue=False dùng khi chỉ muốn kiểm tra việc ghép nối
+    mà chưa đọc dữ liệu (ví dụ test khi JsonRepository chưa được cài)."""
     # Repository: một lớp JsonRepository dùng cho cả 4 loại dữ liệu
     order_repo = JsonRepository(Order, "orders.json", "O", data_dir, sample_dir)
     shipper_repo = JsonRepository(Shipper, "shippers.json", "S", data_dir, sample_dir)
@@ -48,7 +55,14 @@ def build_container(data_dir: Path = DATA_DIR, sample_dir: Path = SAMPLE_DIR) ->
     order_service = OrderService(order_repo, place_repo, queue, history)
     dispatch_service = DispatchService(order_repo, shipper_repo, network, router, queue, history)
 
-    # TODO(Tiên): khi đã cài xong, gọi thêm ở đây:  order_service.restore_queue()
+    # Dựng lại hàng đợi đơn chờ từ dữ liệu đã lưu.
+    if restore_queue:
+        try:
+            order_service.restore_queue()
+        except NotImplementedError:
+            # TẠM THỜI: JsonRepository (Tâm) hoặc models (Quyên) chưa cài xong thì vẫn cho app mở
+            # được để Lâm làm giao diện. TODO(Tiên): xóa khối try / except này sau khi hai PR đó merge.
+            log.warning("Chưa khôi phục được hàng đợi: repository hoặc models chưa được cài đặt")
 
     # Controller
     return AppContext(
