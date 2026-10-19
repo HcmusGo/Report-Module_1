@@ -9,7 +9,6 @@ có thể chưa cài đặt xong ở nhánh hiện tại, nên file này:
 from __future__ import annotations
 
 import json
-from collections import deque
 from typing import Any, Callable, cast
 
 import pytest
@@ -120,10 +119,10 @@ class FakeOrder(BaseEntity):
 
 class FakeShipper(BaseEntity):
     def __init__(self, id: str, name: str, node_id: str, capacity_kg: float,
-                 load_kg: float = 0.0, route: "deque | None" = None) -> None:
+                 load_kg: float = 0.0, route: "list | None" = None) -> None:
         self._id, self.name, self.node_id = id, name, node_id
         self.capacity_kg, self.load_kg = capacity_kg, load_kg
-        self.route: deque = deque(route or [])
+        self.route: list = list(route or [])
 
     @property
     def id(self) -> str:
@@ -146,7 +145,7 @@ class FakeShipper(BaseEntity):
     def from_dict(cls, data: dict[str, Any]) -> "FakeShipper":
         return cls(data["id"], data["name"], data["node_id"], data["capacity_kg"],
                    data.get("load_kg", 0.0),
-                   deque(FakeStop.from_dict(s) for s in data.get("route", [])))
+                   [FakeStop.from_dict(s) for s in data.get("route", [])])
 
 
 # ---------------------------------------------------------------------------
@@ -165,7 +164,7 @@ def _real_models_ready() -> bool:
     try:
         stop = Stop("OX", "PY", StopKind.DELIVERY)  # type: ignore
         order = Order("OX", "Khách", "PX", "PY", 2.0, 10)  # type: ignore
-        shipper = Shipper("SX", "Shipper", "PX", 10.0, 1.0, deque([stop]))  # type: ignore
+        shipper = Shipper("SX", "Shipper", "PX", 10.0, 1.0, [stop])  # type: ignore
         return (order.weight_kg == 2.0 and order.status == OrderStatus.WAITING
                 and shipper.free_capacity_kg == pytest.approx(9.0)
                 and shipper.last_node_id == "PY" and stop.kind == StopKind.DELIVERY)
@@ -285,7 +284,8 @@ class FakeHistory(CommandHistory):
     @staticmethod
     def _simulate_complete(cmd: CompleteStopCmd) -> None:
         shipper = cmd._shippers.get_by_id(cmd._shipper_id)
-        stop = shipper.route.popleft()
+        route = shipper.route
+        stop = route.pop(0) if isinstance(route, list) else route.popleft()
         shipper.node_id = stop.node_id
         if stop.kind == StopKind.DELIVERY:
             order = cmd._orders.get_by_id(stop.order_id)
@@ -312,7 +312,7 @@ def make_order(id: str, pickup: str, delivery: str, weight: float,
 
 def make_shipper(id: str, node_id: str, capacity: float, load: float = 0.0,
                  route: list[tuple[str, str, str]] | None = None):
-    stops = deque(StopCls(o, n, StopKind(k)) for o, n, k in (route or []))
+    stops = [StopCls(o, n, StopKind(k)) for o, n, k in (route or [])]
     return ShipperCls(id, f"Shipper {id}", node_id, capacity, load, stops)
 
 
