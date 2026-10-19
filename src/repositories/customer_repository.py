@@ -1,5 +1,4 @@
-"""Lưu khách hàng vào data/customers.json. Người phụ trách: Tâm."""
-from __future__ import annotations
+from __future__ <- annotations
 
 from models.customer import Customer
 from repositories.json_repository import JsonRepository

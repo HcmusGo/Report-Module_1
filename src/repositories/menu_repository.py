@@ -1,4 +1,3 @@
-"""Lưu menu vào data/menu.json. Người phụ trách: Tâm."""
 from __future__ import annotations
 
 from models.menu_item import MenuItem

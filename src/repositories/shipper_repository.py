@@ -1,4 +1,3 @@
-"""Lưu shipper vào data/shippers.json. Người phụ trách: Tâm."""
 from __future__ import annotations
 
 from models.shipper import Shipper, ShipperStatus
@@ -14,5 +13,4 @@ class ShipperRepository(JsonRepository[Shipper]):
         return Shipper.from_dict(data)
 
     def find_by_status(self, status: ShipperStatus) -> list[Shipper]:
-        """Shipper theo trạng thái, ví dụ IDLE để Dispatcher chọn."""
-        raise NotImplementedError("TODO(Tâm)")
+        return [shipper for shipper in self.get_all() if shipper.status == status]

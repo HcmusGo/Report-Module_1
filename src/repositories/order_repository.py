@@ -1,4 +1,3 @@
-"""Lưu đơn hàng vào data/orders.json. Người phụ trách: Tâm."""
 from __future__ import annotations
 
 from models.order import Order, OrderStatus
@@ -14,7 +13,8 @@ class OrderRepository(JsonRepository[Order]):
         return Order.from_dict(data)
 
     def find_by_status(self, status: OrderStatus) -> list[Order]:
-        raise NotImplementedError("TODO(Tâm)")
+        return [order for order in self.get_all() if order.status == status]
 
     def find_by_customer(self, customer_id: str) -> list[Order]:
-        raise NotImplementedError("TODO(Tâm)")
+        return [order for order in self.get_all() if order.customer_id == customer_id]
+	
