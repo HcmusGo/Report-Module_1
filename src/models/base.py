@@ -1,23 +1,10 @@
-"""Lớp cơ sở cho entity. Người phụ trách: Quyên."""
-from __future__ import annotations
+"""
+[CHUNG] Owner: Cả nhóm (đề xuất: Nguyễn Lê Đức Bảo viết trước)
+File: src/models/base.py
 
-from abc import ABC, abstractmethod
-from typing import Any
-
-
-class BaseEntity(ABC):
-    """Mọi entity có id và tự (de)serialize sang dict để lưu JSON."""
-
-    @property
-    @abstractmethod
-    def id(self) -> str:
-        ...
-
-    @abstractmethod
-    def to_dict(self) -> dict[str, Any]:
-        ...
-
-    @classmethod
-    @abstractmethod
-    def from_dict(cls, data: dict[str, Any]) -> "BaseEntity":
-        ...
+Nhiệm vụ:
+- BaseEntity: lớp cha của mọi entity (GraphNode, MenuItem, Order, ...).
+- Thuộc tính private `_id`, `@property id`.
+- Phương thức `to_dict()` và `from_dict()` để ghi/đọc JSON.
+- Cần chốt sớm vì mọi model đều kế thừa file này.
+"""

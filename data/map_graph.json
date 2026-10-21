@@ -1,0 +1,15 @@
+{
+  "nodes": {
+    "RESTAURANT": {"name": "Quán", "x": 0, "y": 0},
+    "A": {"name": "Ngã tư A", "x": 2, "y": 1},
+    "B": {"name": "Ngã tư B", "x": 4, "y": 0},
+    "C": {"name": "Nhà khách C", "x": 5, "y": 3}
+  },
+  "edges": [
+    ["RESTAURANT", "A", 2.2],
+    ["RESTAURANT", "B", 4.0],
+    ["A", "B", 2.2],
+    ["A", "C", 3.6],
+    ["B", "C", 3.2]
+  ]
+}

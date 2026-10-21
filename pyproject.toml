@@ -1,17 +1,9 @@
 [project]
-name = "project-skeleton"
+name = "order-shipper-system"
 version = "0.1.0"
-description = "Add your description here"
+description = "Hệ thống Quản lý Đơn hàng, Ưu tiên Chế biến & Tìm đường Shipper (1 Quán - 1 Shipper)"
 readme = "README.md"
-authors = [
-    { name = "HcmusGo", email = "letritien2k7@gmail.com" }
-]
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = [
-    "streamlit>=1.65.0",
-]
-
-[dependency-groups]
-dev = [
-    "pytest>=9.1.1",
+    "streamlit",
 ]
