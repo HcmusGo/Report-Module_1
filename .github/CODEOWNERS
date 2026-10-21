@@ -1,33 +1,10 @@
-# Mỗi file một chủ. GitHub tự gắn reviewer khi PR đụng vào file đó.
-# Cú pháp: đường dẫn  @username  (dòng sau thắng dòng trước)
-
-# Tiên: core logic, Undo / Redo, cấu hình chung, quản lý repo
-/src/services/order_service.py      @HcmusGo
-/src/services/order_queue.py        @HcmusGo
-/src/services/history.py            @HcmusGo
-/src/services/commands.py           @HcmusGo
-/src/container.py                   @HcmusGo
-/src/config.py                      @HcmusGo
-/src/exceptions.py                  @HcmusGo
-/pyproject.toml                     @HcmusGo
-/uv.lock                            @HcmusGo
-/README.md                          @HcmusGo
-/.github/                           @HcmusGo
-
-# Bảo: đồ thị, Dijkstra, đề xuất shipper
-/src/services/routing.py            @cleivoid
-/src/services/dispatch_service.py   @cleivoid
-
-# Lâm: controller và giao diện
-/src/app.py                         @thanvanthelam
-/src/views/                         @thanvanthelam
-/src/controllers/                   @thanvanthelam
-
-# Quyên: models và dịch vụ xem danh mục
-/src/models/                        @DUT26DoQuyen
-/src/services/catalog_service.py    @DUT26DoQuyen
-
-# Tâm: repository, dữ liệu khởi tạo sẵn, cấu hình pytest
-/src/repositories/                  @btam200801
-/data/sample/                       @btam200801
-/pytest.ini                         @btam200801
+/src/models/graph_node.py      @HcmusGo
+/src/core/routing_algo.py      @HcmusGo
+/src/core/routing_service.py   @DUT26DoQuyen
+/src/models/menu_item.py       @cleivoid
+/src/core/storage.py           @cleivoid
+/src/core/menu_manager.py      @cleivoid
+/src/core/structures.py        @btam200801
+/src/core/priority_engine.py   @btam200801
+/src/models/order.py           @thanvanthelam
+/src/core/order_manager.py     @thanvanthelam

@@ -1,0 +1,4 @@
+[
+  {"id": "U001", "name": "Nguyễn Văn An", "email": "an@example.com", "is_vip": true, "node_id": "C"},
+  {"id": "U002", "name": "Trần Thị Bình", "email": "binh@example.com", "is_vip": false, "node_id": "B"}
+]
