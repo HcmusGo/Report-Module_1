@@ -28,6 +28,7 @@ ALLOWED_TRANSITIONS: Dict[str, Set[str]] = {
     OrderStatus.DELIVERING: {OrderStatus.PAID},  # Đang giao thì không được hủy giữa chừng
     OrderStatus.PAID: set(),                     # Trạng thái cuối, không thể chuyển tiếp
     OrderStatus.CANCELLED: set()                # Trạng thái cuối, không thể chuyển tiếp
+}
 class Order(BaseEntity):
     def _init_ (self, order_id : str, customer_name: str, customer_email: str, items: List[str], create_at: float)
     #Gọi hàm khởi tạo của lốp cha (nếu có):
