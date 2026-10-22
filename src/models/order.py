@@ -64,7 +64,7 @@ class Order(BaseEntity):
         order = Order (
             order_id = data["id"],
             customer_name = data["customer_name"],
-            customer_emai"l = data["customer_email"],
+            customer_email = data["customer_email"],
             items = data["items"],
             create_at = data["create_at"],
             status = data["status"],
