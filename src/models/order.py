@@ -35,11 +35,10 @@ ALLOWED_TRANSITIONS: Dict[str, Set[str]] = {
 
 class Order(BaseEntity):
     def __init__(self, order_id: str, customer_name: str, customer_email: str,
-                 items: List[str], create_at: float):  # ← LỖI 2,3: __init__ + dấu :
-        # Gọi hàm khởi tạo của lớp cha
-        super().__init__()                              # ← LỖI 4: __init__()
-        self.id: str = order_id                         # ← LỖI 5: Mỗi thuộc tính
-        self.customer_name: str = customer_name         #    phải có tên riêng
+                 items: List[str], create_at: float):
+        super().__init__(order_id)        # ← truyền id cho BaseEntity
+        # self.id đã được BaseEntity gán, không cần gán lại
+        self.customer_name: str = customer_name
         self.customer_email: str = customer_email
         self.items: List[str] = items
         self.create_at: float = create_at
