@@ -108,3 +108,32 @@ class SortedIndex:
 # ===== [M5] Thân Văn Thế Lâm =====
 # TODO: CustomStack (LIFO tự viết) - dùng cho Undo/Redo trong order_manager.py
 #       push(item) / pop() / peek() / is_empty() / __len__()
+
+class CustomStack:
+    """Cấu trúc dữ liệu Ngăn xếp LIFO tự viết từ list, các thao tác đều đạt O(1)"""
+    def __init__(self) -> None:
+        self._data: List[dict] = []
+
+    def push(self, item: dict) -> None:
+        self._data.append(item)
+
+    def pop(self) -> dict:
+        if self.is_empty():
+            raise IndexError("Stack rỗng")
+        return self._data.pop()
+
+    def peek(self) -> Optional[dict]:
+        if self.is_empty():
+            return None
+        return self._data[-1]
+
+    def is_empty(self) -> bool:
+        return len(self._data) == 0
+
+    def __len__(self) -> int:
+        return len(self._data)
+
+    def clear(self) -> None:
+        self._data.clear()
+
+
