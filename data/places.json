@@ -1,0 +1,13 @@
+[
+  {"id": "P01", "name": "Cửa hàng", "x": 5, "y": 5, "kind": "SHOP"},
+  {"id": "P02", "name": "Ngã tư Trung tâm", "x": 5, "y": 7, "kind": "JUNCTION"},
+  {"id": "P03", "name": "Ngã tư Chợ", "x": 3, "y": 6, "kind": "JUNCTION"},
+  {"id": "P04", "name": "Ngã tư Cầu", "x": 7, "y": 6, "kind": "JUNCTION"},
+  {"id": "P05", "name": "Ngã tư Công viên", "x": 2, "y": 3, "kind": "JUNCTION"},
+  {"id": "P06", "name": "Ngã tư Bến xe", "x": 8, "y": 3, "kind": "JUNCTION"},
+  {"id": "P07", "name": "Khu Hoa Sen", "x": 1, "y": 8, "kind": "HOME"},
+  {"id": "P08", "name": "Khu Phú Mỹ", "x": 9, "y": 8, "kind": "HOME"},
+  {"id": "P09", "name": "Chung cư Sao Mai", "x": 1, "y": 1, "kind": "HOME"},
+  {"id": "P10", "name": "Khu Biển Xanh", "x": 9, "y": 1, "kind": "HOME"},
+  {"id": "P11", "name": "Trường học", "x": 5, "y": 1, "kind": "HOME"}
+]
