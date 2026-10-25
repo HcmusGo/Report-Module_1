@@ -9,7 +9,14 @@ Nhiệm vụ:
 """
 import json
 from typing import List, Dict, Optional, Tuple
-from src.models.order import Order, OrderStatus
+
+try:
+    from models.order import Order, OrderStatus
+    from core.structures import CustomStack
+except ModuleNotFoundError:
+    from src.models.order import Order, OrderStatus
+    from src.core.structures import CustomStack
+
 
 class OrderManager:
     def __init__(self, storage_path: str = "data/orders.json") -> None:
@@ -52,7 +59,10 @@ class OrderManager:
         try:
             with open(self.storage_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-                self.orders = {k: Order.from_dict(v) for k, v in data.items()}
+                if isinstance(data, dict):
+                    self.orders = {k: Order.from_dict(v) for k, v in data.items()}
+                else:
+                    self.orders = {}
         except (FileNotFoundError, json.JSONDecodeError):
             self.orders = {}
         self._rebuild_indexes()

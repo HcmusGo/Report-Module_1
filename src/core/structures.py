@@ -5,6 +5,7 @@ File: src/core/structures.py
 File dùng chung. Mỗi người chỉ thêm/sửa class của mình, KHÔNG sửa class người khác.
 Chỉ dùng list, dict, set, tuple (cấm heapq, deque, bisect, queue).
 """
+from typing import Optional
 
 # ===== [M4] Nguyễn Vũ Băng Tâm =====
 # TODO: CustomMinHeap (Min-Heap tự viết từ list) - Module 1 (Dijkstra/A*) đang chờ class này.

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "M001",
+    "name": "Cơm tấm sườn bì chả",
+    "price": 45000,
+    "prep_time": 15,
+    "category": "Món chính",
+    "available": true
+  },
+  {
+    "id": "M002",
+    "name": "Phở bò tái lăn",
+    "price": 50000,
+    "prep_time": 12,
+    "category": "Món chính",
+    "available": true
+  },
+  {
+    "id": "M003",
+    "name": "Bún chả Hà Nội",
+    "price": 45000,
+    "prep_time": 15,
+    "category": "Món chính",
+    "available": true
+  },
+  {
+    "id": "M004",
+    "name": "Bánh mì thịt nướng",
+    "price": 30000,
+    "prep_time": 8,
+    "category": "Ăn vặt",
+    "available": true
+  },
+  {
+    "id": "M005",
+    "name": "Cà phê sữa đá",
+    "price": 25000,
+    "prep_time": 5,
+    "category": "Đồ uống",
+    "available": true
+  },
+  {
+    "id": "M006",
+    "name": "Trà đào cam sả",
+    "price": 30000,
+    "prep_time": 7,
+    "category": "Đồ uống",
+    "available": true
+  }
+]

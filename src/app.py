@@ -5,6 +5,17 @@ File: src/app.py  -  Giao diện Streamlit
 Tuyệt đối KHÔNG viết logic thuật toán hay đọc/ghi file ở đây; chỉ gọi sang src.core.
 """
 
+import time
+
+import sys
+from pathlib import Path
+
+# Tự động thêm thư mục gốc của project vào sys.path để nhận diện cả 'src.xxx' và 'models.xxx'
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+import time
 import streamlit as st
 
 
@@ -200,43 +211,54 @@ def render_kitchen_tab() -> None:
 
 # ===== [M5] Thân Văn Thế Lâm - TAB ĐƠN HÀNG & UNDO/REDO =====
 def render_order_tab() -> None:
-    st.subheader ("Quản lý đơn hàng & Lịch sử trạng thái")
+    try:
+        from core.order_manager import OrderManager
+        from models.order import ALLOWED_TRANSITIONS, OrderStatus
+    except ModuleNotFoundError:
+        from src.core.order_manager import OrderManager
+        from src.models.order import ALLOWED_TRANSITIONS, OrderStatus
 
-#1: Bộ lọc & Tìm kiếm đơn hàng tối ưu O(log n)
-col_search_type, col_search_value = st.columns (2)
+    if "order_manager" not in st.session_state:
+        st.session_state.order_manager = OrderManager()
+    om: OrderManager = st.session_state.order_manager
+
+    st.subheader("Quản lý đơn hàng & Lịch sử trạng thái")
+
+    # 1: Bộ lọc & Tìm kiếm đơn hàng tối ưu O(log n)
+    col_search_type, col_search_value = st.columns(2)
     with col_search_type:
-        search_type = st.selectbox ("Tìm kiếm theo:", ["Tất cả", "Tên khách hàng", "Email"])
+        search_type = st.selectbox("Tìm kiếm theo:", ["Tất cả", "Tên khách hàng", "Email"])
     with col_search_value:
-        search_query = st.text_input ("Nhập từ khóa tìm kiếm", value=)
-# Tiến hành lọc dữ liệu dựa trên kết quả thuật toán Tìm kiếm nhị phân
-if search_query.strip() == "":
-    display_orders = list(om.orders.values())
-else:
-    if search_type == "Tên khách hàng":
-        display_orders = om.find_by_name(search_query.strip())
-    elif search_type == "Email":
-        display_orders = om.find_by_email(search_query.strip())
+        search_query = st.text_input("Nhập từ khóa tìm kiếm", value="")
+    # Tiến hành lọc dữ liệu dựa trên kết quả thuật toán Tìm kiếm nhị phân
+    if search_query.strip() == "":
+        display_orders = list(om.orders.values())
     else:
-        display_orders = list (om.orders.values())
+        if search_type == "Tên khách hàng":
+            display_orders = om.find_by_name(search_query.strip())
+        elif search_type == "Email":
+            display_orders = om.find_by_email(search_query.strip())
+        else:
+            display_orders = list(om.orders.values())
 
-#2: Thanh công cụ điều khiển Hệ thống Undo/Redo
-col_undo, col_redo = st.columns ([1,1,4])
-with col_undo:
-    undo.disabled = om.undo.stack.is_empty ()
-    if st.button ("Undo", disabled=undo.disabled, use_container_width = True):
-        if om.undo ():
-            st.success ("Đã hoàn tất trạng thái")
-            st.rerun ()
-with col_redo:
-    redo.disabled = om.redo.stack.is_empty ()
-    if st.button ("Redo", disabled=redo.disabled, use_container_width = True):
-        if om.redo ():
-            st.success ("Đã làm lại trạng thái thành công")
-            st.rerun ()
+    # 2: Thanh công cụ điều khiển Hệ thống Undo/Redo
+    col_undo, col_redo, _ = st.columns([1, 1, 4])
+    with col_undo:
+        undo_disabled = om.undo_stack.is_empty()
+        if st.button("Undo", disabled=undo_disabled, use_container_width=True):
+            if om.undo():
+                st.success("Đã hoàn tất trạng thái")
+                st.rerun()
+    with col_redo:
+        redo_disabled = om.redo_stack.is_empty()
+        if st.button("Redo", disabled=redo_disabled, use_container_width=True):
+            if om.redo():
+                st.success("Đã làm lại trạng thái thành công")
+                st.rerun()
 
-st.write ("---")
+    st.write("---")
 
-# 3. Danh sách hiển thị và Chuyển trạng thái trực tiếp (Biên kiểm tra hợp lệ)
+    # 3. Danh sách hiển thị và Chuyển trạng thái trực tiếp (Biên kiểm tra hợp lệ)
     if not display_orders:
         st.info("Không tìm thấy đơn hàng nào phù hợp.")
     else:
@@ -254,12 +276,11 @@ st.write ("---")
                     st.markdown(f" Trạng thái hiện tại: **:{color}[{order.status}]**")
                 with c3:
                     st.caption("Hành động xử lý đơn:")
-                    
+
                     if order.status not in [OrderStatus.PAID, OrderStatus.CANCELLED]:
                         # Tra cứu danh sách các trạng thái kế tiếp khả thi từ bảng cấu hình ALLOWED_TRANSITIONS
-                        from src.models.order import ALLOWED_TRANSITIONS
                         next_options = [status for status in ALLOWED_TRANSITIONS.get(order.status, set()) if status != OrderStatus.CANCELLED]
-                        
+
                         if next_options:
                             next_status = next_options[0]
                             if st.button(f"Chuyển sang [{next_status}]", key=f"next_{order.id}", use_container_width=True):
@@ -267,7 +288,7 @@ st.write ("---")
                                     st.toast(f"Đơn {order.id} đã chuyển sang {next_status}")
                                     time.sleep(0.3)
                                     st.rerun()
-                                    
+
                         # Biên kiểm tra chặn: Ẩn hoặc chặn nút Hủy nếu đơn đang đi giao (DELIVERING) hoặc đã thanh toán (PAID)
                         if order.status not in [OrderStatus.DELIVERING, OrderStatus.PAID]:
                             if st.button("Hủy Đơn Hàng", key=f"cancel_{order.id}", type="secondary", use_container_width=True):
@@ -279,26 +300,6 @@ st.write ("---")
                             st.caption("*Không thể hủy đơn ở giai đoạn này*")
                     else:
                         st.caption("*Đơn hàng đã đóng vòng đời*")
-                        
-def main() -> None:
-    st.set_page_config(page_title="Quản lý Đơn hàng & Shipper", layout="wide")
-    st.title("Hệ thống Quản lý Đơn hàng, Ưu tiên Chế biến & Tìm đường Shipper")
-
-    tab_map, tab_menu, tab_kitchen, tab_order = st.tabs(
-        ["Bản đồ / Lộ trình", "Menu", "Hàng đợi chế biến", "Đơn hàng"]
-    )
-    with tab_map:
-        render_map_tab()
-    with tab_menu:
-        render_menu_tab()
-    with tab_kitchen:
-        render_kitchen_tab()
-    with tab_order:
-        render_order_tab()
-
-
-if __name__ == "__main__":
-    main()
 
 
 def main() -> None:
