@@ -5,18 +5,35 @@ File: src/app.py  -  Giao diện Streamlit
 Tuyệt đối KHÔNG viết logic thuật toán hay đọc/ghi file ở đây; chỉ gọi sang src.core.
 """
 
-import time
-
 import sys
+import time
 from pathlib import Path
 
-# Tự động thêm thư mục gốc của project vào sys.path để nhận diện cả 'src.xxx' và 'models.xxx'
+import streamlit as st
+
+# Tự động thêm thư mục gốc của project vào sys.path để nhận diện cả 'src.xxx'
 ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-import time
-import streamlit as st
+from src.core.menu_manager import MenuManager
+from src.core.order_manager import OrderManager
+from src.core.priority_engine import PriorityEngine
+from src.models.order import ALLOWED_TRANSITIONS, OrderStatus, make_item_snapshot
+
+
+def get_order_manager() -> OrderManager:
+    """Lấy hoặc khởi tạo instance OrderManager duy nhất trong session_state."""
+    if "order_manager" not in st.session_state:
+        st.session_state.order_manager = OrderManager()
+    return st.session_state.order_manager
+
+
+def get_menu_manager() -> MenuManager:
+    """Lấy hoặc khởi tạo instance MenuManager duy nhất trong session_state."""
+    if "menu_manager" not in st.session_state:
+        st.session_state.menu_manager = MenuManager()
+    return st.session_state.menu_manager
 
 
 # ===== [M2] Đào Đoàn Đỗ Quyên - TAB BẢN ĐỒ / LỘ TRÌNH SHIPPER =====
@@ -26,14 +43,7 @@ def render_map_tab() -> None:
 
 # ===== [M3] Nguyễn Lê Đức Bảo - TAB MENU =====
 def render_menu_tab() -> None:
-    try:
-        from core.menu_manager import MenuManager
-    except ModuleNotFoundError:
-        from src.core.menu_manager import MenuManager
-
-    if "menu_manager" not in st.session_state:
-        st.session_state.menu_manager = MenuManager()
-    manager: MenuManager = st.session_state.menu_manager
+    manager: MenuManager = get_menu_manager()
 
     st.subheader("📋 Quản lý Thực đơn (Menu)")
 
@@ -57,7 +67,8 @@ def render_menu_tab() -> None:
     if query:
         display_items = manager.search_by_name(query)
         st.caption(
-            f"⚡ Kết quả tìm kiếm O(log n) cho từ khóa **'{query}'**: {len(display_items)} món tìm thấy."
+            f"⚡ Kết quả tìm kiếm O(log n) cho từ khóa **'{query}'**: "
+            f"{len(display_items)} món tìm thấy."
         )
     else:
         display_items = manager.get_all()
@@ -184,7 +195,8 @@ def render_menu_tab() -> None:
                                 available=edit_available,
                             )
                             st.success(
-                                f"Đã cập nhật món '{updated_item.name}' (Mã: {updated_item.id}) thành công!"
+                                f"Đã cập nhật món '{updated_item.name}' "
+                                f"(Mã: {updated_item.id}) thành công!"
                             )
                             st.rerun()
                         except (ValueError, KeyError) as err:
@@ -206,114 +218,194 @@ def render_menu_tab() -> None:
 
 # ===== [M4] Nguyễn Vũ Băng Tâm - TAB HÀNG ĐỢI CHẾ BIẾN =====
 def render_kitchen_tab() -> None:
-    """
-    Giao diện điều phối nhà bếp (Kitchen Dispatch Tab) trong app.py.
-    """
-    try:
-        from core.priority_engine import PriorityEngine, OrderItem
-    except ModuleNotFoundError:
-        from src.core.priority_engine import PriorityEngine, OrderItem
-
-    if "priority_engine" not in st.session_state:
-        st.session_state.priority_engine = PriorityEngine()
-    priority_engine: PriorityEngine = st.session_state.priority_engine
+    """Giao diện điều phối nhà bếp (Kitchen Dispatch Tab) trong app.py."""
+    om = get_order_manager()
+    engine = PriorityEngine()
 
     st.header("🍳 Quản Lý & Chế Biến Đơn Hàng (Kitchen Tab)")
-    st.markdown("Hệ thống hàng đợi ưu tiên chế biến dựa trên **CustomMinHeap** & **CustomPriorityQueue**.")
+    st.markdown(
+        "Hệ thống hàng đợi ưu tiên chế biến động (**CustomPriorityQueue**) "
+        "với thuật toán Aging chống bỏ đói."
+    )
+
+    # Hàng đợi bếp = các đơn CONFIRMED lấy từ OrderManager, xếp bằng PriorityEngine.rank
+    confirmed_orders = om.get_orders_by_status(OrderStatus.CONFIRMED)
+    preparing_orders = om.get_orders_by_status(OrderStatus.PREPARING)
+
+    now = time.time()
+    ranked_orders = engine.rank(confirmed_orders, now=now)
 
     col1, col2 = st.columns([1, 1])
 
     with col1:
-        st.subheader("➕ Thêm Đơn Hàng Mới")
-        with st.form(key="add_order_form"):
-            order_id = st.text_input("Mã Đơn Hàng", value=f"ORD-{st.session_state.get('order_counter', 101)}")
-            customer_name = st.text_input("Tên Khách Hàng", value="Nguyễn Văn A")
-            items_str = st.text_area("Món Ăn (phân cách bằng dấu phẩy)", value="Cơm tấm, Trà đá")
-            is_vip = st.checkbox("Đơn Hàng Ưu Tiên (VIP)")
-            
-            submit_button = st.form_submit_button(label="Gửi Vào Bếp")
+        st.subheader("⚡ Chế Biến Đơn Hàng Tiếp Theo")
+        st.info(f"Tổng số đơn chờ chế biến (CONFIRMED): **{len(ranked_orders)}**")
 
-            if submit_button:
-                if not order_id or not customer_name or not items_str:
-                    st.error("Vui lòng điền đầy đủ thông tin đơn hàng!")
-                else:
-                    items = [item.strip() for item in items_str.split(",") if item.strip()]
-                    import datetime
-                    now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    new_order = OrderItem(
-                        order_id=order_id,
-                        customer_name=customer_name,
-                        items=items,
-                        created_at=now_str,
-                        is_vip=is_vip
-                    )
-                    priority_engine.add_order(new_order)
-                    st.session_state['order_counter'] = st.session_state.get('order_counter', 101) + 1
-                    st.success(f"Đã thêm đơn hàng **{order_id}** vào hàng đợi nhà bếp!")
+        if ranked_orders:
+            next_ord = ranked_orders[0]
+            exp = engine.explain(next_ord, now=now)
+            st.markdown("### 🔔 Đơn hàng ưu tiên số 1:")
+            st.write(
+                f"- **Mã đơn:** `{next_ord.id}` "
+                f"{'🌟 (VIP)' if next_ord.is_vip else ''}"
+            )
+            st.write(f"- **Khách hàng:** **{next_ord.customer_name}**")
+            items_str = ", ".join(
+                f"{it['name']} x{it['quantity']}" for it in next_ord.items
+            ) if next_ord.items else "Không có món"
+            st.write(f"- **Món ăn:** {items_str}")
+            st.write(
+                f"- **Chờ:** {exp['wait_minutes']:.1f} phút | "
+                f"**Chế biến:** {exp['prep_minutes']:.1f} phút | "
+                f"**Điểm:** `{exp['score']:.1f}`"
+            )
+
+            if st.button(
+                "🍳 Nhận đơn vào bếp (-> PREPARING)",
+                type="primary",
+                use_container_width=True,
+            ):
+                if om.update_order_status(next_ord.id, OrderStatus.PREPARING):
+                    st.success(f"Đã chuyển đơn **{next_ord.id}** sang PREPARING!")
                     st.rerun()
+                else:
+                    st.error(f"Lỗi: {om.last_error}")
+        else:
+            st.warning("Hiện tại không có đơn nào ở trạng thái CONFIRMED cần chế biến.")
 
     with col2:
-        st.subheader("⚡ Chế Biến Đơn Hàng Tiếp Theo")
-        pending_orders = priority_engine.get_pending_orders()
-        st.info(f"Tổng số đơn đang chờ: **{len(pending_orders)}**")
+        st.subheader("🔥 Đơn Đang Chế Biến (PREPARING)")
+        st.info(f"Số đơn đang trong bếp: **{len(preparing_orders)}**")
 
-        if pending_orders:
-            next_order = pending_orders[0]
-            st.markdown("### 🔔 Đơn hàng ưu tiên nhất:")
-            st.write(f"- **Mã đơn:** {next_order.order_id} {'🌟 (VIP)' if next_order.is_vip else ''}")
-            st.write(f"- **Khách hàng:** {next_order.customer_name}")
-            st.write(f"- **Món ăn:** {', '.join(next_order.items)}")
-            st.write(f"- **Thời gian:** {next_order.created_at}")
-
-            if st.button("✅ Hoàn Thành & Chuyển Đơn Tiếp Theo", type="primary"):
-                processed = priority_engine.process_next_order()
-                if processed:
-                    st.success(f"Đã hoàn thành chế biến đơn hàng **{processed.order_id}**!")
-                    st.rerun()
+        if preparing_orders:
+            for p_order in preparing_orders:
+                with st.container(border=True):
+                    pc1, pc2 = st.columns([3, 2])
+                    with pc1:
+                        st.markdown(f"**Đơn:** `{p_order.id}` ({p_order.customer_name})")
+                        p_items = ", ".join(
+                            f"{it['name']} x{it['quantity']}" for it in p_order.items
+                        ) if p_order.items else "Không có món"
+                        st.caption(f"Món: {p_items}")
+                    with pc2:
+                        if st.button(
+                            "✅ Hoàn thành (-> READY)",
+                            key=f"finish_{p_order.id}",
+                            use_container_width=True,
+                        ):
+                            if om.update_order_status(p_order.id, OrderStatus.READY):
+                                st.success(f"Đơn **{p_order.id}** đã chuyển sang READY!")
+                                st.rerun()
+                            else:
+                                st.error(f"Lỗi: {om.last_error}")
         else:
-            st.warning("Hiện tại không có đơn hàng nào trong hàng đợi.")
+            st.caption("Bếp hiện đang trống, chưa có đơn nào đang nấu.")
 
     st.markdown("---")
-    st.subheader("📋 Danh Sách Đơn Hàng Đang Chờ Chế Biến (Theo Thứ Tự Ưu Tiên)")
-    
-    if pending_orders:
+    st.subheader("📋 Danh Sách Đơn Chờ Chế Biến (Xếp Theo Thứ Tự Ưu Tiên)")
+
+    if ranked_orders:
         display_data = []
-        for idx, order in enumerate(pending_orders, start=1):
+        for idx, order in enumerate(ranked_orders, start=1):
+            exp = engine.explain(order, now=now)
             display_data.append({
-                "Thứ Tự": idx,
-                "Mã Đơn": order.order_id,
-                "Khách Hàng": order.customer_name,
-                "Loại Đơn": "VIP 🌟" if order.is_vip else "Thường",
-                "Danh Sách Món": ", ".join(order.items),
-                "Thời Gian Tạo": order.created_at
+                "Thứ tự": idx,
+                "Mã đơn": order.id,
+                "Khách": order.customer_name,
+                "VIP": "VIP 🌟" if order.is_vip else "Thường",
+                "Chờ (phút)": f"{exp['wait_minutes']:.1f}",
+                "Chế biến (phút)": f"{exp['prep_minutes']:.1f}",
+                "Điểm": f"{exp['score']:.1f}",
             })
-        st.table(display_data)
+        st.dataframe(display_data, use_container_width=True, hide_index=True)
     else:
-        st.info("Hàng đợi trống.")
+        st.info("Hàng đợi bếp trống.")
 
 
 # ===== [M5] Thân Văn Thế Lâm - TAB ĐƠN HÀNG & UNDO/REDO =====
 def render_order_tab() -> None:
-    try:
-        from core.order_manager import OrderManager
-        from models.order import ALLOWED_TRANSITIONS, OrderStatus
-    except ModuleNotFoundError:
-        from src.core.order_manager import OrderManager
-        from src.models.order import ALLOWED_TRANSITIONS, OrderStatus
+    om = get_order_manager()
+    menu_mgr = get_menu_manager()
 
-    if "order_manager" not in st.session_state:
-        st.session_state.order_manager = OrderManager()
-    om: OrderManager = st.session_state.order_manager
+    st.subheader("📦 Quản lý đơn hàng & Lịch sử trạng thái")
 
-    st.subheader("Quản lý đơn hàng & Lịch sử trạng thái")
+    # 1. Form tạo đơn mới
+    st.markdown("#### 1. Tạo đơn hàng mới")
+    available_items = [item for item in menu_mgr.get_all() if item.available]
 
-    # 1: Bộ lọc & Tìm kiếm đơn hàng tối ưu O(log n)
+    with st.form("create_order_form"):
+        col_c1, col_c2 = st.columns(2)
+        with col_c1:
+            customer_name = st.text_input("Tên khách hàng *", placeholder="VD: Nguyễn Văn A")
+            customer_email = st.text_input("Email khách hàng *", placeholder="VD: a@example.com")
+            is_vip = st.checkbox("Khách hàng VIP 🌟", value=False)
+        with col_c2:
+            shipper_status = st.selectbox(
+                "Trạng thái Shipper *",
+                ["IDLE", "BUSY", "BATCHING_ALLOWED"],
+                help="Chỉ nhận đơn khi Shipper ở trạng thái IDLE hoặc BATCHING_ALLOWED",
+            )
+            selected_items = st.multiselect(
+                "Chọn món ăn * (chỉ món đang phục vụ):",
+                options=available_items,
+                format_func=lambda it: (
+                    f"[{it.id}] {it.name} - {it.price:,.0f} đ ({it.prep_time}p)"
+                ),
+            )
+
+        item_snapshots = []
+        if selected_items:
+            st.caption("Số lượng từng món:")
+            cols = st.columns(min(len(selected_items), 4))
+            for idx, item in enumerate(selected_items):
+                with cols[idx % len(cols)]:
+                    qty = st.number_input(
+                        f"{item.name}",
+                        min_value=1,
+                        max_value=50,
+                        value=1,
+                        step=1,
+                        key=f"order_qty_{item.id}",
+                    )
+                    item_snapshots.append(
+                        make_item_snapshot(
+                            item_id=item.id,
+                            name=item.name,
+                            quantity=qty,
+                            price=item.price,
+                            prep_minutes=item.prep_time,
+                        )
+                    )
+
+        submitted_order = st.form_submit_button("➕ Tạo đơn hàng", use_container_width=True)
+        if submitted_order:
+            new_id = om.next_id()
+            success = om.create_order(
+                order_id=new_id,
+                customer_name=customer_name,
+                customer_email=customer_email,
+                items=item_snapshots,
+                created_at=time.time(),
+                shipper_status=shipper_status,
+                is_vip=is_vip,
+            )
+            if success:
+                st.success(f"Đã tạo đơn hàng '{new_id}' thành công!")
+                st.rerun()
+            else:
+                st.error(f"Tạo đơn thất bại: {om.last_error}")
+
+    st.divider()
+
+    # 2. Bộ lọc & Tìm kiếm đơn hàng tối ưu O(log n)
+    st.markdown("#### 2. Tra cứu & Lịch sử trạng thái")
     col_search_type, col_search_value = st.columns(2)
     with col_search_type:
         search_type = st.selectbox("Tìm kiếm theo:", ["Tất cả", "Tên khách hàng", "Email"])
     with col_search_value:
         search_query = st.text_input("Nhập từ khóa tìm kiếm", value="")
-    # Tiến hành lọc dữ liệu dựa trên kết quả thuật toán Tìm kiếm nhị phân
+
+    # Lọc dữ liệu bằng Binary Search
     if search_query.strip() == "":
         display_orders = list(om.orders.values())
     else:
@@ -324,24 +416,24 @@ def render_order_tab() -> None:
         else:
             display_orders = list(om.orders.values())
 
-    # 2: Thanh công cụ điều khiển Hệ thống Undo/Redo
+    # 3. Thanh công cụ Undo / Redo
     col_undo, col_redo, _ = st.columns([1, 1, 4])
     with col_undo:
         undo_disabled = om.undo_stack.is_empty()
-        if st.button("Undo", disabled=undo_disabled, use_container_width=True):
+        if st.button("↩️ Undo", disabled=undo_disabled, use_container_width=True):
             if om.undo():
                 st.success("Đã hoàn tất trạng thái")
                 st.rerun()
     with col_redo:
         redo_disabled = om.redo_stack.is_empty()
-        if st.button("Redo", disabled=redo_disabled, use_container_width=True):
+        if st.button("↪️ Redo", disabled=redo_disabled, use_container_width=True):
             if om.redo():
                 st.success("Đã làm lại trạng thái thành công")
                 st.rerun()
 
     st.write("---")
 
-    # 3. Danh sách hiển thị và Chuyển trạng thái trực tiếp (Biên kiểm tra hợp lệ)
+    # 4. Danh sách hiển thị và Chuyển trạng thái
     if not display_orders:
         st.info("Không tìm thấy đơn hàng nào phù hợp.")
     else:
@@ -349,32 +441,56 @@ def render_order_tab() -> None:
             with st.container(border=True):
                 c1, c2, c3 = st.columns([2, 2, 2])
                 with c1:
-                    st.markdown(f"**Mã Đơn:** `{order.id}`")
-                    st.write(f" Khách hàng: {order.customer_name}")
+                    vip_badge = " 🌟 [VIP]" if order.is_vip else ""
+                    st.markdown(f"**Mã Đơn:** `{order.id}`{vip_badge}")
+                    st.write(f"Khách hàng: **{order.customer_name}**")
                     st.write(f"Email: {order.customer_email}")
                 with c2:
-                    st.write(f" Món ăn: {', '.join(order.items)}")
-                    # Định dạng màu sắc trực quan cho từng loại trạng thái đơn hàng
-                    color = 'green' if order.status == OrderStatus.PAID else 'blue' if order.status == OrderStatus.DELIVERING else 'red' if order.status == OrderStatus.CANCELLED else 'orange'
-                    st.markdown(f" Trạng thái hiện tại: **:{color}[{order.status}]**")
+                    if order.items:
+                        items_str = ", ".join(
+                            f"{it['name']} x{it['quantity']}" for it in order.items
+                        )
+                    else:
+                        items_str = "Không có món"
+                    st.write(f"Món ăn: {items_str}")
+                    st.caption(f"Tổng chế biến: {order.total_prep_minutes:.0f} phút")
+                    color = (
+                        "green"
+                        if order.status == OrderStatus.PAID
+                        else "blue"
+                        if order.status == OrderStatus.DELIVERING
+                        else "red"
+                        if order.status == OrderStatus.CANCELLED
+                        else "orange"
+                    )
+                    st.markdown(f"Trạng thái hiện tại: **:{color}[{order.status}]**")
                 with c3:
                     st.caption("Hành động xử lý đơn:")
-
                     if order.status not in [OrderStatus.PAID, OrderStatus.CANCELLED]:
-                        # Tra cứu danh sách các trạng thái kế tiếp khả thi từ bảng cấu hình ALLOWED_TRANSITIONS
-                        next_options = [status for status in ALLOWED_TRANSITIONS.get(order.status, set()) if status != OrderStatus.CANCELLED]
-
+                        next_options = [
+                            status
+                            for status in ALLOWED_TRANSITIONS.get(order.status, set())
+                            if status != OrderStatus.CANCELLED
+                        ]
                         if next_options:
                             next_status = next_options[0]
-                            if st.button(f"Chuyển sang [{next_status}]", key=f"next_{order.id}", use_container_width=True):
+                            if st.button(
+                                f"Chuyển sang [{next_status}]",
+                                key=f"next_{order.id}",
+                                use_container_width=True,
+                            ):
                                 if om.update_order_status(order.id, next_status):
                                     st.toast(f"Đơn {order.id} đã chuyển sang {next_status}")
                                     time.sleep(0.3)
                                     st.rerun()
 
-                        # Biên kiểm tra chặn: Ẩn hoặc chặn nút Hủy nếu đơn đang đi giao (DELIVERING) hoặc đã thanh toán (PAID)
                         if order.status not in [OrderStatus.DELIVERING, OrderStatus.PAID]:
-                            if st.button("Hủy Đơn Hàng", key=f"cancel_{order.id}", type="secondary", use_container_width=True):
+                            if st.button(
+                                "Hủy Đơn Hàng",
+                                key=f"cancel_{order.id}",
+                                type="secondary",
+                                use_container_width=True,
+                            ):
                                 if om.update_order_status(order.id, OrderStatus.CANCELLED):
                                     st.toast(f"Đã hủy thành công đơn {order.id}")
                                     time.sleep(0.3)

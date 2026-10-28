@@ -11,16 +11,10 @@ Nhiệm vụ:
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
 
-try:
-    from core.storage import load_json, save_json
-    from core.structures import SortedIndex
-    from models.menu_item import MenuItem
-except ModuleNotFoundError:
-    from src.core.storage import load_json, save_json
-    from src.core.structures import SortedIndex
-    from src.models.menu_item import MenuItem
+from src.core.storage import load_json, save_json
+from src.core.structures import SortedIndex
+from src.models.menu_item import MenuItem
 
 
 class MenuManager:
@@ -201,7 +195,8 @@ class MenuManager:
     ) -> MenuItem:
         """Cập nhật thông tin món ăn. Nếu đổi tên, cập nhật lại SortedIndex.
 
-        # Độ phức tạp: O(1) tra cứu dict + O(n) cập nhật SortedIndex nếu đổi tên + O(n) ghi file JSON.
+        # Độ phức tạp: O(1) tra cứu dict + O(n) cập nhật SortedIndex nếu đổi tên
+        # + O(n) ghi file JSON.
         """
         item = self._items.get(item_id)
         if item is None:
@@ -250,9 +245,8 @@ class MenuManager:
     def search_by_name(self, name: str) -> list[MenuItem]:
         """Tìm kiếm món ăn theo tên bằng Binary Search trên SortedIndex.
 
-        # Độ phức tạp: O(log n) tìm trên SortedIndex bằng Binary Search + O(1) tra dict cho mỗi kết quả
+        # Độ phức tạp: O(log n) tìm kiếm Binary Search + O(1) tra dict cho mỗi kết quả.
         """
-        # Độ phức tạp: O(log n) tìm trên SortedIndex bằng Binary Search + O(1) tra dict cho mỗi kết quả
         matched_ids = self.name_index.find_all(name)
         results: list[MenuItem] = []
         for item_id in matched_ids:
