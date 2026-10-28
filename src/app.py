@@ -206,7 +206,90 @@ def render_menu_tab() -> None:
 
 # ===== [M4] Nguyễn Vũ Băng Tâm - TAB HÀNG ĐỢI CHẾ BIẾN =====
 def render_kitchen_tab() -> None:
-    st.info("TODO [M4]: hiển thị thứ tự chế biến theo độ ưu tiên.")
+    """
+    Giao diện điều phối nhà bếp (Kitchen Dispatch Tab) trong app.py.
+    """
+    try:
+        from core.priority_engine import PriorityEngine, OrderItem
+    except ModuleNotFoundError:
+        from src.core.priority_engine import PriorityEngine, OrderItem
+
+    if "priority_engine" not in st.session_state:
+        st.session_state.priority_engine = PriorityEngine()
+    priority_engine: PriorityEngine = st.session_state.priority_engine
+
+    st.header("🍳 Quản Lý & Chế Biến Đơn Hàng (Kitchen Tab)")
+    st.markdown("Hệ thống hàng đợi ưu tiên chế biến dựa trên **CustomMinHeap** & **CustomPriorityQueue**.")
+
+    col1, col2 = st.columns([1, 1])
+
+    with col1:
+        st.subheader("➕ Thêm Đơn Hàng Mới")
+        with st.form(key="add_order_form"):
+            order_id = st.text_input("Mã Đơn Hàng", value=f"ORD-{st.session_state.get('order_counter', 101)}")
+            customer_name = st.text_input("Tên Khách Hàng", value="Nguyễn Văn A")
+            items_str = st.text_area("Món Ăn (phân cách bằng dấu phẩy)", value="Cơm tấm, Trà đá")
+            is_vip = st.checkbox("Đơn Hàng Ưu Tiên (VIP)")
+            
+            submit_button = st.form_submit_button(label="Gửi Vào Bếp")
+
+            if submit_button:
+                if not order_id or not customer_name or not items_str:
+                    st.error("Vui lòng điền đầy đủ thông tin đơn hàng!")
+                else:
+                    items = [item.strip() for item in items_str.split(",") if item.strip()]
+                    import datetime
+                    now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    new_order = OrderItem(
+                        order_id=order_id,
+                        customer_name=customer_name,
+                        items=items,
+                        created_at=now_str,
+                        is_vip=is_vip
+                    )
+                    priority_engine.add_order(new_order)
+                    st.session_state['order_counter'] = st.session_state.get('order_counter', 101) + 1
+                    st.success(f"Đã thêm đơn hàng **{order_id}** vào hàng đợi nhà bếp!")
+                    st.rerun()
+
+    with col2:
+        st.subheader("⚡ Chế Biến Đơn Hàng Tiếp Theo")
+        pending_orders = priority_engine.get_pending_orders()
+        st.info(f"Tổng số đơn đang chờ: **{len(pending_orders)}**")
+
+        if pending_orders:
+            next_order = pending_orders[0]
+            st.markdown("### 🔔 Đơn hàng ưu tiên nhất:")
+            st.write(f"- **Mã đơn:** {next_order.order_id} {'🌟 (VIP)' if next_order.is_vip else ''}")
+            st.write(f"- **Khách hàng:** {next_order.customer_name}")
+            st.write(f"- **Món ăn:** {', '.join(next_order.items)}")
+            st.write(f"- **Thời gian:** {next_order.created_at}")
+
+            if st.button("✅ Hoàn Thành & Chuyển Đơn Tiếp Theo", type="primary"):
+                processed = priority_engine.process_next_order()
+                if processed:
+                    st.success(f"Đã hoàn thành chế biến đơn hàng **{processed.order_id}**!")
+                    st.rerun()
+        else:
+            st.warning("Hiện tại không có đơn hàng nào trong hàng đợi.")
+
+    st.markdown("---")
+    st.subheader("📋 Danh Sách Đơn Hàng Đang Chờ Chế Biến (Theo Thứ Tự Ưu Tiên)")
+    
+    if pending_orders:
+        display_data = []
+        for idx, order in enumerate(pending_orders, start=1):
+            display_data.append({
+                "Thứ Tự": idx,
+                "Mã Đơn": order.order_id,
+                "Khách Hàng": order.customer_name,
+                "Loại Đơn": "VIP 🌟" if order.is_vip else "Thường",
+                "Danh Sách Món": ", ".join(order.items),
+                "Thời Gian Tạo": order.created_at
+            })
+        st.table(display_data)
+    else:
+        st.info("Hàng đợi trống.")
 
 
 # ===== [M5] Thân Văn Thế Lâm - TAB ĐƠN HÀNG & UNDO/REDO =====
