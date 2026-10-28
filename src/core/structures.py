@@ -6,11 +6,126 @@ File dùng chung. Mỗi người chỉ thêm/sửa class của mình, KHÔNG s�
 Chỉ dùng list, dict, set, tuple (cấm heapq, deque, bisect, queue).
 """
 from typing import Optional
+from typing import List, Optional
 
 # ===== [M4] Nguyễn Vũ Băng Tâm =====
 # TODO: CustomMinHeap (Min-Heap tự viết từ list) - Module 1 (Dijkstra/A*) đang chờ class này.
 #       push(priority, item) / pop() / peek() / is_empty() / __len__()
 # TODO: CustomPriorityQueue (dựa trên Min-Heap) - dùng trong priority_engine.py
+from typing import Generic, TypeVar, List, Tuple, Any, Optional
+
+T = TypeVar("T")
+
+class CustomMinHeap(Generic[T]):
+    """
+    Cấu trúc dữ liệu Min-Heap tự định nghĩa sử dụng danh sách (List).
+    Phần tử nhỏ nhất luôn nằm ở gốc (chỉ số 0).
+    Hỗ trợ so sánh trực tiếp các giá trị hoặc so sánh theo key_func.
+    """
+    def __init__(self, key_func=None):
+        self._heap: List[T] = []
+        self._key_func = key_func if key_func else lambda x: x
+
+    def _get_key(self, item: T) -> Any:
+        return self._key_func(item)
+
+    def _sift_up(self, index: int) -> None:
+        parent = (index - 1) // 2
+        while index > 0 and self._get_key(self._heap[index]) < self._get_key(self._heap[parent]):
+            self._heap[index], self._heap[parent] = self._heap[parent], self._heap[index]
+            index = parent
+            parent = (index - 1) // 2
+
+    def _sift_down(self, index: int) -> None:
+        size = len(self._heap)
+        while True:
+            smallest = index
+            left = 2 * index + 1
+            right = 2 * index + 2
+
+            if left < size and self._get_key(self._heap[left]) < self._get_key(self._heap[smallest]):
+                smallest = left
+            if right < size and self._get_key(self._heap[right]) < self._get_key(self._heap[smallest]):
+                smallest = right
+
+            if smallest != index:
+                self._heap[index], self._heap[smallest] = self._heap[smallest], self._heap[index]
+                index = smallest
+            else:
+                break
+
+    def push(self, item: T) -> None:
+        """Thêm một phần tử vào Min-Heap."""
+        self._heap.append(item)
+        self._sift_up(len(self._heap) - 1)
+
+    def pop(self) -> T:
+        """Lấy và xóa phần tử nhỏ nhất khỏi Min-Heap."""
+        if self.is_empty():
+            raise IndexError("pop from an empty heap")
+        root = self._heap[0]
+        last_item = self._heap.pop()
+        if not self.is_empty():
+            self._heap[0] = last_item
+            self._sift_down(0)
+        return root
+
+    def peek(self) -> Optional[T]:
+        """Xem phần tử nhỏ nhất mà không xóa."""
+        return self._heap[0] if not self.is_empty() else None
+
+    def is_empty(self) -> bool:
+        return len(self._heap) == 0
+
+    def __len__(self) -> int:
+        return len(self._heap)
+
+    def __repr__(self) -> str:
+        return f"<CustomMinHeap size={len(self._heap)}>"
+
+
+class CustomPriorityQueue(Generic[T]):
+    """
+    Hàng đợi ưu tiên (Priority Queue) xây dựng dựa trên CustomMinHeap.
+    Các phần tử được đưa vào kèm độ ưu tiên (priority_key). Độ ưu tiên nhỏ hơn có mức ưu tiên cao hơn.
+    """
+    def __init__(self):
+        # Lưu trữ cặp (priority_key, counter, item)
+        self._counter = 0
+        self._heap = CustomMinHeap(key_func=lambda x: (x[0], x[1]))
+
+    def enqueue(self, item: T, priority_key: Any) -> None:
+        """Thêm phần tử vào hàng đợi với độ ưu tiên xác định."""
+        self._heap.push((priority_key, self._counter, item))
+        self._counter += 1
+
+    def dequeue(self) -> T:
+        """Lấy ra phần tử có độ ưu tiên cao nhất."""
+        if self.is_empty():
+            raise IndexError("dequeue from an empty priority queue")
+        priority_key, count, item = self._heap.pop()
+        return item
+
+    def peek(self) -> Optional[T]:
+        """Xem phần tử có độ ưu tiên cao nhất."""
+        if self.is_empty():
+            return None
+        return self._heap.peek()[2]
+
+    def is_empty(self) -> bool:
+        return self._heap.is_empty()
+
+    def to_list(self) -> List[T]:
+        """Trả về danh sách các phần tử được sắp xếp theo độ ưu tiên mà không làm biến đổi hàng đợi."""
+        items_sorted = sorted(self._heap._heap, key=lambda x: (x[0], x[1]))
+        return [item[2] for item in items_sorted]
+
+    def __len__(self) -> int:
+        return len(self._heap)
+
+    def __repr__(self) -> str:
+        return f"<CustomPriorityQueue size={len(self._heap)}>"
+
 
 # ===== [M3] Nguyễn Lê Đức Bảo =====
 # TODO: SortedIndex - sorted list tuple (search_key, id) + Binary Search tự viết.
