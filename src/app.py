@@ -260,7 +260,11 @@ def render_kitchen_tab() -> None:
                 f"**Điểm:** `{exp['score']:.1f}`"
             )
 
-            if st.button("🍳 Nhận đơn vào bếp (-> PREPARING)", type="primary", use_container_width=True):
+            if st.button(
+                "🍳 Nhận đơn vào bếp (-> PREPARING)",
+                type="primary",
+                use_container_width=True,
+            ):
                 if om.update_order_status(next_ord.id, OrderStatus.PREPARING):
                     st.success(f"Đã chuyển đơn **{next_ord.id}** sang PREPARING!")
                     st.rerun()

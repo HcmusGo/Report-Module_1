@@ -79,7 +79,8 @@ class PriorityEngine:
     ) -> list[OrderLike]:
         """Xếp hạng các đơn hàng theo độ ưu tiên từ cao xuống thấp (điểm score nhỏ làm trước).
 
-        # Độ phức tạp: O(n log n) khi enqueue n phần tử vào CustomPriorityQueue (mỗi enqueue O(log n))
+        # Độ phức tạp: O(n log n) khi enqueue n phần tử vào CustomPriorityQueue (mỗi enqueue
+        # O(log n))
         # và dequeue n phần tử (mỗi dequeue O(log n)).
         #
         # Giải thích cơ chế chống bỏ đói (Aging):
