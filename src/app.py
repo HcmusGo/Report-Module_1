@@ -38,7 +38,30 @@ def get_menu_manager() -> MenuManager:
 
 # ===== [M2] Đào Đoàn Đỗ Quyên - TAB BẢN ĐỒ / LỘ TRÌNH SHIPPER =====
 def render_map_tab() -> None:
-    st.info("TODO [M2]: vẽ lộ trình Shipper lên bản đồ (dữ liệu từ routing_service).")
+    st.title("🗺️ Bản đồ & Lộ trình giao hàng")
+    
+    graph_data = st.session_state.get("graph_data", {})
+    if not graph_data:
+        st.warning("Chưa có dữ liệu bản đồ.")
+        return
+        
+    node_ids = list(graph_data.keys())
+    start_id = st.selectbox("Chọn điểm xuất phát (Quán):", options=node_ids, key="map_start")
+    goal_id = st.selectbox("Chọn điểm giao hàng:", options=node_ids, key="map_goal")
+    
+    if st.button("Tính toán và hiển thị lộ trình"):
+        try:
+            data = get_map_render_data(graph_data, start_id, goal_id)
+            st.success(f"Tổng quãng đường: {data['total_distance']} km")
+            st.write("Đường đi (Danh sách ID):", " -> ".join(data["path"]))
+            
+            if data["path_coords"]:
+                chart_data = pd.DataFrame(data["path_coords"], columns=["x", "y"])
+                st.line_chart(chart_data, x="x", y="y")
+            else:
+                st.error("Không tìm thấy đường đi giữa hai điểm này.")
+        except Exception as e:
+            st.error(f"Đã xảy ra lỗi: {e}")
 
 
 # ===== [M3] Nguyễn Lê Đức Bảo - TAB MENU =====
