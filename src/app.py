@@ -9,6 +9,7 @@ import sys
 import time
 from pathlib import Path
 
+import pandas as pd
 import streamlit as st
 
 # Tự động thêm thư mục gốc của project vào sys.path để nhận diện cả 'src.xxx'
@@ -19,6 +20,9 @@ if str(ROOT_DIR) not in sys.path:
 from src.core.menu_manager import MenuManager
 from src.core.order_manager import OrderManager
 from src.core.priority_engine import PriorityEngine
+from src.core.routing_service import get_map_render_data
+from src.core.storage import load_json
+from src.models.graph_node import Graph
 from src.models.order import ALLOWED_TRANSITIONS, OrderStatus, make_item_snapshot
 
 
@@ -38,7 +42,39 @@ def get_menu_manager() -> MenuManager:
 
 # ===== [M2] Đào Đoàn Đỗ Quyên - TAB BẢN ĐỒ / LỘ TRÌNH SHIPPER =====
 def render_map_tab() -> None:
-    st.info("TODO [M2]: vẽ lộ trình Shipper lên bản đồ (dữ liệu từ routing_service).")
+    st.title("🗺️ Bản đồ & Lộ trình giao hàng")
+    
+    # Load bản đồ từ map_graph.json và chuyển thành Graph object
+    if "graph" not in st.session_state:
+        raw_data = load_json("data/map_graph.json", default={})
+        if not raw_data or "nodes" not in raw_data:
+            st.warning("Chưa có dữ liệu bản đồ.")
+            return
+        st.session_state.graph = Graph.from_dict(raw_data)
+
+    graph: Graph = st.session_state.graph
+
+    node_ids = graph.node_ids
+    if not node_ids:
+        st.warning("Bản đồ không có đỉnh nào.")
+        return
+
+    start_id = st.selectbox("Chọn điểm xuất phát (Quán):", options=node_ids, key="map_start")
+    goal_id = st.selectbox("Chọn điểm giao hàng:", options=node_ids, key="map_goal")
+
+    if st.button("Tính toán và hiển thị lộ trình"):
+        try:
+            data = get_map_render_data(graph, start_id, goal_id)
+            st.success(f"Tổng quãng đường: {data['total_distance']} km")
+            st.write("Đường đi (Danh sách ID):", " -> ".join(data["path"]))
+            
+            if data["path_coords"]:
+                chart_data = pd.DataFrame(data["path_coords"], columns=["x", "y"])
+                st.line_chart(chart_data, x="x", y="y")
+            else:
+                st.error("Không tìm thấy đường đi giữa hai điểm này.")
+        except Exception as e:
+            st.error(f"Đã xảy ra lỗi: {e}")
 
 
 # ===== [M3] Nguyễn Lê Đức Bảo - TAB MENU =====
