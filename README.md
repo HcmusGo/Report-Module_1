@@ -91,6 +91,42 @@ uv run python -m streamlit run src/app.py
 
 Chạy từ thư mục gốc dự án, dùng `python -m streamlit` để import `src.models...` và `src.core...` hoạt động đúng.
 
+## Cách dùng app theo đúng nghiệp vụ
+
+Quy trình chuẩn mô phỏng luồng vận hành thực tế (1 Quán – 1 Shipper) qua 7 bước:
+
+1. **Bước 1: Tạo đơn hàng tại tab "Đơn hàng"**
+   - Chọn lần lượt các khách hàng mẫu `U001`, `U002`, `U003` từ danh sách.
+   - Thông tin khách hàng (tên, email, hạng VIP) và điểm giao hiển thị tự động dạng chỉ đọc.
+   - Chọn món ăn từ Menu, điều chỉnh số lượng mong muốn và bấm **Tạo đơn hàng**.
+2. **Bước 2: Xác nhận đơn hàng**
+   - Chuyển trạng thái các đơn vừa tạo từ `PLACED` sang `CONFIRMED`.
+3. **Bước 3: Chế biến tại tab "Hàng đợi chế biến"**
+   - Các đơn được sắp xếp tự động theo đúng thứ tự ưu tiên của `PriorityEngine`.
+   - Lần lượt chuyển đơn từ `CONFIRMED` sang `PREPARING`, sau đó hoàn tất sang `READY`.
+4. **Bước 4: Xem quãng đường đơn lẻ tại tab "Bản đồ / Lộ trình"**
+   - Tab hiển thị danh sách các đơn hàng đang ở trạng thái `READY`.
+   - Xem quãng đường và chi phí di chuyển đơn lẻ từ Quán đến từng điểm giao.
+5. **Bước 5: Gom chuyến giao hàng đa điểm**
+   - Chọn các đơn `READY` cần giao trong cùng một chuyến gom.
+   - Hệ thống lập lộ trình tối ưu bằng Nearest-Neighbor: thứ tự thăm
+     `CUSTOMER_3` -> `CUSTOMER` -> `CUSTOMER_2`, tổng quãng đường 16.0 km.
+   - Xem bảng so sánh thuật toán Dijkstra vs A* (chi phí quãng đường và số đỉnh duyệt).
+6. **Bước 6: Bắt đầu giao hàng**
+   - Bấm **Bắt đầu giao**: toàn bộ đơn được chọn chuyển nguyên tử sang `DELIVERING`.
+   - Trạng thái Shipper chuyển sang `BUSY`.
+   - Trong khi Shipper `BUSY`, hệ thống từ chối tiếp nhận thêm đơn mới để tránh quá tải.
+7. **Bước 7: Hoàn tất giao hàng và thanh toán**
+   - Bấm **Đã giao** cho từng đơn trong chuyến giao khi giao thành công sang `PAID`.
+   - Khi đơn cuối cùng trong chuyến hoàn tất, Shipper tự động quay về trạng thái `IDLE`.
+
+### Cơ chế sao lưu an toàn khi lỗi dữ liệu (.bak)
+
+- Khi file JSON lưu trữ (như `map_graph.json`, `orders.json`) bị sai cú pháp, tầng storage
+  tự động đổi tên file lỗi thành `<file>.bak` và trả về cấu trúc mặc định rỗng.
+- Cơ chế này giúp ứng dụng không bị crash đột ngột; người dùng có thể kiểm tra, sửa lỗi
+  cú pháp trong file `.bak` và đổi tên lại để khôi phục dữ liệu bình thường.
+
 ## Dữ liệu
 
 - `data/map_graph.json` và `data/users.json` trong bộ khung chỉ là **dữ liệu mẫu nhỏ** để chạy thử; thay bằng dữ liệu thật của nhóm.
