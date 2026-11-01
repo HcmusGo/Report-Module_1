@@ -1,15 +1,58 @@
 {
   "nodes": {
-    "RESTAURANT": {"name": "Quán", "x": 0, "y": 0},
-    "A": {"name": "Ngã tư A", "x": 2, "y": 1},
-    "B": {"name": "Ngã tư B", "x": 4, "y": 0},
-    "C": {"name": "Nhà khách C", "x": 5, "y": 3}
+    "RESTAURANT": {
+      "name": "Quán ăn",
+      "x": 0.0,
+      "y": 0.0
+    },
+    "A": {
+      "name": "Ngã tư A",
+      "x": 2.0,
+      "y": 2.0
+    },
+    "B": {
+      "name": "Ngã tư B",
+      "x": 3.0,
+      "y": -1.0
+    },
+    "C": {
+      "name": "Ngã ba C",
+      "x": 5.0,
+      "y": 2.0
+    },
+    "D": {
+      "name": "Ngã tư D",
+      "x": 6.0,
+      "y": -1.0
+    },
+    "CUSTOMER": {
+      "name": "Nhà khách hàng",
+      "x": 8.0,
+      "y": 1.0
+    },
+    "CUSTOMER_2": {
+      "name": "Nhà khách hàng 2",
+      "x": 7.0,
+      "y": 4.0
+    },
+    "CUSTOMER_3": {
+      "name": "Nhà khách hàng 3",
+      "x": 4.0,
+      "y": -4.0
+    }
   },
   "edges": [
-    ["RESTAURANT", "A", 2.2],
-    ["RESTAURANT", "B", 4.0],
-    ["A", "B", 2.2],
-    ["A", "C", 3.6],
-    ["B", "C", 3.2]
+    ["RESTAURANT", "A", 2.8],
+    ["RESTAURANT", "B", 3.2],
+    ["A", "B", 3.2],
+    ["A", "C", 3.0],
+    ["B", "D", 3.0],
+    ["C", "D", 3.2],
+    ["C", "CUSTOMER", 3.2],
+    ["D", "CUSTOMER", 2.8],
+    ["C", "CUSTOMER_2", 2.8],
+    ["CUSTOMER", "CUSTOMER_2", 3.2],
+    ["B", "CUSTOMER_3", 3.2],
+    ["D", "CUSTOMER_3", 3.6]
   ]
 }

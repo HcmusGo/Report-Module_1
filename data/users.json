@@ -1,4 +1,30 @@
 [
-  {"id": "U001", "name": "Nguyễn Văn An", "email": "an@example.com", "is_vip": true, "node_id": "C"},
-  {"id": "U002", "name": "Trần Thị Bình", "email": "binh@example.com", "is_vip": false, "node_id": "B"}
+  {
+    "id": "U001",
+    "name": "Nguyễn Văn An",
+    "email": "an@example.com",
+    "is_vip": true,
+    "node_id": "CUSTOMER"
+  },
+  {
+    "id": "U002",
+    "name": "Trần Thị Bình",
+    "email": "binh@example.com",
+    "is_vip": false,
+    "node_id": "CUSTOMER_2"
+  },
+  {
+    "id": "U003",
+    "name": "Lê Văn Cường",
+    "email": "cuong@example.com",
+    "is_vip": false,
+    "node_id": "CUSTOMER_3"
+  },
+  {
+    "id": "U004",
+    "name": "Phạm Thu Dung",
+    "email": "dung@example.com",
+    "is_vip": true,
+    "node_id": "CUSTOMER_2"
+  }
 ]
