@@ -11,10 +11,7 @@ from __future__ import annotations
 
 from typing import Any
 
-try:
-    from models.base import BaseEntity
-except ModuleNotFoundError:
-    from src.models.base import BaseEntity
+from src.models.base import BaseEntity
 
 
 class MenuItem(BaseEntity):

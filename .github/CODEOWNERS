@@ -8,3 +8,7 @@
 /src/core/priority_engine.py   @btam200801
 /src/models/order.py           @thanvanthelam
 /src/core/order_manager.py     @thanvanthelam
+/src/models/customer.py        @thanvanthelam
+/src/core/customer_manager.py  @thanvanthelam
+/tests/test_customer_manager.py @thanvanthelam
+/tests/test_routing_service.py @DUT26DoQuyen
