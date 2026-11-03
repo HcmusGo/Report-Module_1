@@ -1,0 +1,38 @@
+{
+  "O001": {
+    "id": "O001",
+    "customer_name": "Trần Thị Bình",
+    "customer_email": "binh@example.com",
+    "items": [
+      {
+        "item_id": "M001",
+        "name": "Cơm tấm sườn bì chả",
+        "quantity": 1,
+        "price": 45000.0,
+        "prep_minutes": 15.0
+      }
+    ],
+    "created_at": 1793509600.3027174,
+    "status": "PAID",
+    "is_vip": false,
+    "delivery_node_id": "CUSTOMER_2"
+  },
+  "O002": {
+    "id": "O002",
+    "customer_name": "Trần Thị Bình",
+    "customer_email": "binh@example.com",
+    "items": [
+      {
+        "item_id": "M005",
+        "name": "Cà phê sữa đá",
+        "quantity": 1,
+        "price": 25000.0,
+        "prep_minutes": 5.0
+      }
+    ],
+    "created_at": 1793509756.3173795,
+    "status": "PAID",
+    "is_vip": false,
+    "delivery_node_id": "CUSTOMER_2"
+  }
+}
